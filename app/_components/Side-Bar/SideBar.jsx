@@ -169,6 +169,7 @@ const SideBar = () => {
   };
 
   return (
+
     <aside
       className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto"
       style={{
@@ -194,6 +195,7 @@ const SideBar = () => {
         </Link>
       </div>
   
+
       <ul className="space-y-6">
         {menuItems.map((item, index) => {
           const isActive =

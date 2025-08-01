@@ -23,9 +23,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          <SideBar/>
-          <main>
+        <div className="flex min-h-screen">
+          {/* Sidebar on the left */}
+          <aside className="hidden lg:block lg:w-[20%] xl:w-[15%] text-white">
+            <SideBar />
+          </aside>
+
+          {/* Main content on the right */}
+          <main className="flex-1 section_space overflow-auto bg-zinc-800">
             {children}
           </main>
         </div>

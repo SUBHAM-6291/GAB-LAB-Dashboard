@@ -1,19 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FaEnvelope,
-  FaKey,
-  FaUser,
-  FaFacebookF,
-  FaApple,
-} from 'react-icons/fa';
+import { FaEnvelope, FaKey, FaUser, FaFacebookF, FaApple } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push('/dashboard'); // Fake redirect after login/signup
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black flex items-center justify-center px-4 relative overflow-hidden">
@@ -58,6 +59,7 @@ export default function LoginPage() {
           <AnimatePresence mode="wait">
             <motion.form
               key={isSignUp ? 'signup-form' : 'login-form'}
+              onSubmit={handleSubmit}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
