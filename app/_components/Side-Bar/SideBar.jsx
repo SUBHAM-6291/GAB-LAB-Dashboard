@@ -1,38 +1,94 @@
-'use client'
+'use client';
 
-import React, { useState, useRef } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {
   MdDashboard,
   MdOutlineSettings,
   MdOutlineAnalytics,
   MdFolder,
+  MdHome,
+  MdContactMail,
+  MdSchool,
+  MdStar,
+  MdExplore,
+  MdWeb,
+  MdComment,
+  MdEvent,
+  MdPeople,
+  MdRestaurant,
+  MdEmojiEvents,
+  MdLocalOffer,
+  MdFeedback,
+  MdGroup,
+  MdImage,
+  MdBook,
+  MdInfo,
+  MdSpaceDashboard,
+  MdTrendingUp,
+  MdArticle,
+  MdHelp,
+  MdSettingsApplications, // Added missing import
 } from 'react-icons/md';
 
 const menuItems = [
+  { title: 'Dashboard', path: '/dashboard', icon: <MdDashboard />, subItems: [] },
   {
-    title: 'Dashboard',
-    path: '/dashboard',
-    icon: <MdDashboard />,
-    subItems: [],
-  },
-  {
-    title: 'Private Group',
-    icon: <MdFolder />,
+    title: 'Home',
+    icon: <MdHome />,
     subItems: [
-      { title: 'Banner', path: '/dashboard/Private_Group/Banner' },
-      { title: 'Private Group', path: '/dashboard/Private_Group/Private_Group' },
-      { title: 'Private Class', path: '/dashboard/Private_Group/Private_Class' },
-      { title: 'Tell Us More', path: '/dashboard/Private_Group/Tell_Us_More_Here' },
+      { title: 'Contact Us', path: '/dashboard/home/contactUs', icon: <MdContactMail /> },
+      { title: 'Course', path: '/dashboard/home/course', icon: <MdSchool /> },
+      { title: 'Delight The Senses', path: '/dashboard/home/delightTheSenses', icon: <MdStar /> },
+      { title: 'Discover', path: '/dashboard/home/discover', icon: <MdExplore /> },
+      { title: 'Hero Section', path: '/dashboard/home/heroSection', icon: <MdWeb /> },
+      { title: 'Leave Us Review', path: '/dashboard/home/leaveUsReview', icon: <MdComment /> },
+      { title: 'Live Flamenco Shows', path: '/dashboard/home/liveFlamencoShows', icon: <MdEvent /> },
+      { title: 'Our Guests', path: '/dashboard/home/ourGuests', icon: <MdPeople /> },
+      { title: 'Paella Cooking Class', path: '/dashboard/home/paellaCookingClass', icon: <MdRestaurant /> },
+      { title: 'Ranked', path: '/dashboard/home/ranked', icon: <MdEmojiEvents /> },
+      { title: 'Summer Sale', path: '/dashboard/home/summerSale', icon: <MdLocalOffer /> },
+      { title: 'Testimonial', path: '/dashboard/home/testimonial', icon: <MdFeedback /> },
     ],
   },
   {
+    title: 'Our Classes',
+    icon: <MdFolder />,
+    subItems: [
+      { title: 'Private Group', path: '/dashboard/ourclasses/Private_Group', icon: <MdGroup /> },
+      { title: 'Banner', path: '/dashboard/ourclasses/Private_Group/Banner', icon: <MdImage /> },
+      { title: 'Courses', path: '/dashboard/ourclasses/Private_Group/courses', icon: <MdBook /> },
+    ],
+  },
+  {
+    title: 'Our Story',
+    icon: <MdFolder />,
+    subItems: [
+      { title: 'About Us', path: '/dashboard/our-story/About-us', icon: <MdInfo /> },
+      { title: 'Discover', path: '/dashboard/our-story/Discover', icon: <MdExplore /> },
+      { title: 'Discover Our Feature', path: '/dashboard/our-story/Discover our feuture', icon: <MdStar /> },
+      { title: 'Our Team', path: '/dashboard/our-story/Our Team', icon: <MdSpaceDashboard /> },
+      { title: 'Process', path: '/dashboard/our-story/Process', icon: <MdSettingsApplications /> }, // Uses the newly imported icon
+      { title: 'TripAdvisor', path: '/dashboard/our-story/TripAdvisor', icon: <MdFeedback /> },
+      { title: 'Why Choose', path: '/dashboard/our-story/Why Choose', icon: <MdTrendingUp /> },
+    ],
+  },
+  {
+    title: 'Partnership',
+    icon: <MdFolder />,
+    subItems: [
+      { title: 'Banner', path: '/dashboard/partnership/Banner', icon: <MdImage /> },
+      { title: 'Cards', path: '/dashboard/partnership/Cards', icon: <MdWeb /> },
+    ],
+  },
+  { title: 'Blog', path: '/dashboard/blog', icon: <MdArticle />, subItems: [] },
+  { title: 'FAQ', path: '/dashboard/faq', icon: <MdHelp />, subItems: [] },
+  {
     title: 'Settings',
     path: '/settings',
-    icon: <MdOutlineSettings />,
     subItems: [
-      { title: 'Profile', path: '/settings/profile' },
+      { title: 'Profile', path: '/settings/profile', icon: <MdPeople /> },
       { title: 'Account', path: '/settings/account' },
       { title: 'Preferences', path: '/settings/preferences' },
     ],
@@ -42,30 +98,48 @@ const menuItems = [
     path: '/reports',
     icon: <MdOutlineAnalytics />,
     subItems: [
-      { title: 'Analytics', path: '/reports/analytics' },
-      { title: 'Sales', path: '/reports/sales' },
+      { title: 'Analytics', path: '/reports/analytics', icon: <MdTrendingUp /> },
+      { title: 'Sales', path: '/reports/sales', icon: <MdBook /> },
     ],
   },
 ];
 
 const SideBar = () => {
+  const pathname = usePathname();
   const [expanded, setExpanded] = useState({});
   const [activeIdx, setActiveIdx] = useState(null);
   const [activeSubIdx, setActiveSubIdx] = useState(null);
-  const router = useRouter();
-  const pathname = usePathname();
-  const fileInputRef = useRef(null);
-  const [profileImage, setProfileImage] = useState(
-    'https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg'
-  );
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setProfileImage(imageURL);
-    }
-  };
+  useEffect(() => {
+    const newActiveIdx = menuItems.findIndex(
+      (item) =>
+        pathname === item.path ||
+        item.subItems.some((subItem) => pathname.startsWith(subItem.path))
+    );
+    setActiveIdx(newActiveIdx);
+
+    const newActiveSubIdx = (() => {
+      for (let i = 0; i < menuItems.length; i++) {
+        const subIdx = menuItems[i].subItems.findIndex((subItem) => pathname === subItem.path);
+        if (subIdx !== -1) {
+          return `${i}-${subIdx}`;
+        }
+      }
+      return null;
+    })();
+    setActiveSubIdx(newActiveSubIdx);
+
+    const initialExpanded = {};
+    menuItems.forEach((item) => {
+      if (
+        item.subItems.length > 0 &&
+        (pathname === item.path || item.subItems.some((subItem) => pathname.startsWith(subItem.path)))
+      ) {
+        initialExpanded[item.title] = true;
+      }
+    });
+    setExpanded(initialExpanded);
+  }, [pathname]);
 
   const toggleSubMenu = (index) => {
     setExpanded((prev) => ({
@@ -77,98 +151,76 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="fixed top-0 left-0 lg:w-[20vw] xl:w-[15vw] h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white p-4 shadow-xl border-r border-blue-800/20 z-50">
-      <div className="absolute -top-16 -left-20 w-60 h-60 rounded-full bg-blue-500/20 blur-[100px] animate-pulse z-0" />
-      <div className="absolute -bottom-16 -right-20 w-60 h-60 rounded-full bg-blue-500/20 blur-[100px] animate-pulse z-0" />
+    <aside className="w-64 bg-black border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0">
+      <h2 className="text-2xl font-bold text-yellow-400 mb-10">Dashboard</h2>
+      <ul className="space-y-6">
+        {menuItems.map((item, index) => {
+          const isActive =
+            activeIdx === index ||
+            pathname === item.path ||
+            item.subItems.some((subItem) => pathname.startsWith(subItem.path));
+          const isExpanded = expanded[item.title];
+          const hasSubItems = item.subItems && item.subItems.length > 0;
 
-      <div className="flex flex-col h-full">
-        <div className="p-4">
-          <div className="flex flex-col items-center bg-white/5 p-4 rounded-xl backdrop-blur-md border border-white/10 shadow-md mb-4">
-            <img
-              src={profileImage}
-              alt="User Avatar"
-              className="w-20 h-20 rounded-full ring-2 ring-blue-500 object-cover mb-3 hover:scale-105 transition duration-300"
-              onClick={() => fileInputRef.current?.click()}
-            />
-            <h2 className="text-lg font-semibold">Ed Roh</h2>
-            <p className="text-sm text-gray-400">VP Fancy Admin</p>
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-hidden hover:overflow-y-auto px-4 pb-4 scrollbar-hide">
-          <nav className="flex flex-col gap-2">
-            {menuItems.map((item, index) => {
-              const isActive = activeIdx === index || pathname === item.path;
-              const isExpanded = expanded[item.title];
-              const hasSubItems = item.subItems && item.subItems.length > 0;
-
-              return (
-                <div key={item.title}>
-                  {hasSubItems ? (
-                    <div
-                      onClick={() => toggleSubMenu(index)}
-                      className={`flex items-center cursor-pointer rounded-lg px-3 py-2 transition-all group ${
-                        isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-white/70'
-                      }`}
-                    >
-                      <span className="text-lg">{item.icon}</span>
-                      <span className="ml-3 text-sm font-medium">{item.title}</span>
-                      <span
-                        className={`ml-auto text-xs transform transition-transform duration-200 ${
-                          isExpanded ? 'rotate-180' : ''
-                        }`}
-                      >
-                        ▼
-                      </span>
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.path}
-                      onClick={() => {
-                        setActiveIdx(index);
-                        setExpanded({});
-                        setActiveSubIdx(null);
-                      }}
-                      className={`flex items-center rounded-lg px-3 py-2 transition-all ${
-                        isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-white/70'
-                      }`}
-                    >
-                      <span className="text-lg">{item.icon}</span>
-                      <span className="ml-3 text-sm font-medium">{item.title}</span>
-                    </Link>
-                  )}
-
-                  {hasSubItems && isExpanded && (
-                    <div className="ml-8 mt-1 flex flex-col gap-2">
-                      {item.subItems.map((subItem, subIdx) => (
-                        <Link
-                          href={subItem.path}
-                          key={subItem.title}
-                          onClick={() => setActiveSubIdx(`${index}-${subIdx}`)}
-                          className={`text-sm px-2 py-1 rounded-md transition ${
-                            activeSubIdx === `${index}-${subIdx}` || pathname === subItem.path
-                              ? 'bg-white/10 text-white'
-                              : 'text-white/60 hover:text-white hover:bg-white/10'
-                          }`}
-                        >
-                          {subItem.title}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+          return (
+            <li key={item.title}>
+              {hasSubItems ? (
+                <div
+                  onClick={() => toggleSubMenu(index)}
+                  className={`flex items-center gap-3 text-yellow-200 hover:text-yellow-400 cursor-pointer ${
+                    isActive ? 'text-yellow-400' : ''
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.title}</span>
+                  <span
+                    className={`ml-auto transform transition-transform duration-200 ${
+                      isExpanded ? 'rotate-180' : ''
+                    }`}
+                  >
+                    ▼
+                  </span>
                 </div>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
+              ) : (
+                <Link
+                  href={item.path}
+                  className={`flex items-center gap-3 text-yellow-200 hover:text-yellow-400 cursor-pointer ${
+                    isActive ? 'text-yellow-400' : ''
+                  }`}
+                  onClick={() => {
+                    setActiveIdx(index);
+                    setExpanded({});
+                    setActiveSubIdx(null);
+                  }}
+                >
+                  {item.icon}
+                  <span>{item.title}</span>
+                </Link>
+              )}
+              {hasSubItems && isExpanded && (
+                <ul className="ml-8 mt-2 space-y-2">
+                  {item.subItems.map((subItem, subIdx) => (
+                    <li key={subItem.title}>
+                      <Link
+                        href={subItem.path}
+                        className={`flex items-center gap-2 text-sm text-yellow-200 hover:text-yellow-400 ${
+                          activeSubIdx === `${index}-${subIdx}` || pathname === subItem.path
+                            ? 'text-yellow-400'
+                            : ''
+                        }`}
+                        onClick={() => setActiveSubIdx(`${index}-${subIdx}`)}
+                      >
+                        {subItem.icon}
+                        {subItem.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </aside>
   );
 };
