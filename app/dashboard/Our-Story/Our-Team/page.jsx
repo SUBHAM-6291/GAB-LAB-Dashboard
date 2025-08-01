@@ -1,10 +1,10 @@
-import WhyChoose from '@/app/_components/Our-Story/Why Choose/WhyChoose'
+import OurTeam from '@/app/_components/Our-Story/Our-Team/OurTeam'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-<WhyChoose/>
+      <OurTeam/>
     </div>
   )
 }

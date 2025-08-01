@@ -29,77 +29,94 @@ import {
   MdTrendingUp,
   MdArticle,
   MdHelp,
-  MdSettingsApplications, // Added missing import
+  MdSettingsApplications,
+  MdExpandMore,
+  MdExpandLess,
 } from 'react-icons/md';
 
 const menuItems = [
-  { title: 'Dashboard', path: '/dashboard', icon: <MdDashboard />, subItems: [] },
+  { title: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-5 h-5" />, subItems: [] },
   {
     title: 'Home',
-    icon: <MdHome />,
+    icon: <MdHome className="w-5 h-5" />,
     subItems: [
-      { title: 'Contact Us', path: '/dashboard/home/contactUs', icon: <MdContactMail /> },
-      { title: 'Course', path: '/dashboard/home/course', icon: <MdSchool /> },
-      { title: 'Delight The Senses', path: '/dashboard/home/delightTheSenses', icon: <MdStar /> },
-      { title: 'Discover', path: '/dashboard/home/discover', icon: <MdExplore /> },
-      { title: 'Hero Section', path: '/dashboard/home/heroSection', icon: <MdWeb /> },
-      { title: 'Leave Us Review', path: '/dashboard/home/leaveUsReview', icon: <MdComment /> },
-      { title: 'Live Flamenco Shows', path: '/dashboard/home/liveFlamencoShows', icon: <MdEvent /> },
-      { title: 'Our Guests', path: '/dashboard/home/ourGuests', icon: <MdPeople /> },
-      { title: 'Paella Cooking Class', path: '/dashboard/home/paellaCookingClass', icon: <MdRestaurant /> },
-      { title: 'Ranked', path: '/dashboard/home/ranked', icon: <MdEmojiEvents /> },
-      { title: 'Summer Sale', path: '/dashboard/home/summerSale', icon: <MdLocalOffer /> },
-      { title: 'Testimonial', path: '/dashboard/home/testimonial', icon: <MdFeedback /> },
+      { title: 'Contact Us', path: '/dashboard/home/contactUs', icon: <MdContactMail className="w-4 h-4" /> },
+      { title: 'Course', path: '/dashboard/home/course', icon: <MdSchool className="w-4 h-4" /> },
+      { title: 'Delight The Senses', path: '/dashboard/home/delightTheSenses', icon: <MdStar className="w-4 h-4" /> },
+      { title: 'Discover', path: '/dashboard/home/discover', icon: <MdExplore className="w-4 h-4" /> },
+      { title: 'Hero Section', path: '/dashboard/home/heroSection', icon: <MdWeb className="w-4 h-4" /> },
+      { title: 'Leave Us Review', path: '/dashboard/home/leaveUsReview', icon: <MdComment className="w-4 h-4" /> },
+      { title: 'Live Flamenco Shows', path: '/dashboard/home/liveFlamencoShows', icon: <MdEvent className="w-4 h-4" /> },
+      { title: 'Our Guests', path: '/dashboard/home/ourGuests', icon: <MdPeople className="w-4 h-4" /> },
+      { title: 'Paella Cooking Class', path: '/dashboard/home/paellaCookingClass', icon: <MdRestaurant className="w-4 h-4" /> },
+      { title: 'Ranked', path: '/dashboard/home/ranked', icon: <MdEmojiEvents className="w-4 h-4" /> },
+      { title: 'Summer Sale', path: '/dashboard/home/summerSale', icon: <MdLocalOffer className="w-4 h-4" /> },
+      { title: 'Testimonial', path: '/dashboard/home/testimonial', icon: <MdFeedback className="w-4 h-4" /> },
     ],
   },
   {
     title: 'Our Classes',
-    icon: <MdFolder />,
+    icon: <MdFolder className="w-5 h-5" />,
     subItems: [
-      { title: 'Private Group', path: '/dashboard/ourclasses/Private_Group', icon: <MdGroup /> },
-      { title: 'Banner', path: '/dashboard/ourclasses/Private_Group/Banner', icon: <MdImage /> },
-      { title: 'Courses', path: '/dashboard/ourclasses/Private_Group/courses', icon: <MdBook /> },
+      { title: 'Banner', path: '/dashboard/ourClasses/Banner', icon: <MdImage className="w-4 h-4" /> },
+      { title: 'Courses', path: '/dashboard/ourClasses/courses', icon: <MdBook className="w-4 h-4" /> },
     ],
   },
   {
     title: 'Our Story',
-    icon: <MdFolder />,
+    icon: <MdFolder className="w-5 h-5" />,
     subItems: [
-      { title: 'About Us', path: '/dashboard/our-story/About-us', icon: <MdInfo /> },
-      { title: 'Discover', path: '/dashboard/our-story/Discover', icon: <MdExplore /> },
-      { title: 'Discover Our Feature', path: '/dashboard/our-story/Discover our feuture', icon: <MdStar /> },
-      { title: 'Our Team', path: '/dashboard/our-story/Our Team', icon: <MdSpaceDashboard /> },
-      { title: 'Process', path: '/dashboard/our-story/Process', icon: <MdSettingsApplications /> }, // Uses the newly imported icon
-      { title: 'TripAdvisor', path: '/dashboard/our-story/TripAdvisor', icon: <MdFeedback /> },
-      { title: 'Why Choose', path: '/dashboard/our-story/Why Choose', icon: <MdTrendingUp /> },
+      { title: 'About Us', path: '/dashboard/Our-Story/About-us', icon: <MdInfo className="w-4 h-4" /> },
+      { title: 'Discover', path: '/dashboard/Our-Story/Discover', icon: <MdExplore className="w-4 h-4" /> },
+      { title: 'Discover Our Feature', path: '/dashboard/Our-Story/Discover-our-feature', icon: <MdStar className="w-4 h-4" /> },
+      { title: 'Our Team', path: '/dashboard/Our-Story/Our-Team', icon: <MdSpaceDashboard className="w-4 h-4" /> },
+      { title: 'Process', path: '/dashboard/Our-Story/Process', icon: <MdSettingsApplications className="w-4 h-4" /> },
+      { title: 'TripAdvisor', path: '/dashboard/Our-Story/TripAdvisor', icon: <MdFeedback className="w-4 h-4" /> },
+      { title: 'Why Choose', path: '/dashboard/Our-Story/Why-Choose', icon: <MdTrendingUp className="w-4 h-4" /> },
     ],
   },
   {
     title: 'Partnership',
-    icon: <MdFolder />,
+    icon: <MdFolder className="w-5 h-5" />,
     subItems: [
-      { title: 'Banner', path: '/dashboard/partnership/Banner', icon: <MdImage /> },
-      { title: 'Cards', path: '/dashboard/partnership/Cards', icon: <MdWeb /> },
+      { title: 'Banner', path: '/dashboard/partnership/Banner', icon: <MdImage className="w-4 h-4" /> },
+      { title: 'Tailored', path: '/dashboard/partnership/Tailored', icon: <MdWeb className="w-4 h-4" /> },
+      { title: 'Benefits', path: '/dashboard/partnership/Benefits', icon: <MdImage className="w-4 h-4" /> },
+      { title: 'Query', path: '/dashboard/partnership/Query', icon: <MdWeb className="w-4 h-4" /> },
     ],
   },
-  { title: 'Blog', path: '/dashboard/blog', icon: <MdArticle />, subItems: [] },
-  { title: 'FAQ', path: '/dashboard/faq', icon: <MdHelp />, subItems: [] },
+  {
+    title: 'Blog',
+    path: '/dashboard/blog',
+    icon: <MdArticle className="w-5 h-5" />,
+    subItems: [
+      { title: 'Banner', path: '/dashboard/Blog/Banner', icon: <MdImage className="w-4 h-4" /> },
+      { title: 'Cards', path: '/dashboard/Blog/cards', icon: <MdImage className="w-4 h-4" /> },
+    ],
+  },
+  {
+    title: 'FAQ',
+    path: '/dashboard/faq',
+    icon: <MdHelp className="w-5 h-5" />,
+    subItems: [
+      { title: 'Faq', path: '/dashboard/Faq/Faq', icon: <MdImage className="w-4 h-4" /> },
+    ],
+  },
   {
     title: 'Settings',
     path: '/settings',
+    icon: <MdOutlineSettings className="w-5 h-5" />,
     subItems: [
-      { title: 'Profile', path: '/settings/profile', icon: <MdPeople /> },
-      { title: 'Account', path: '/settings/account' },
-      { title: 'Preferences', path: '/settings/preferences' },
+      { title: 'Profile', path: '/dashboard/Profile/Profile', icon: <MdPeople className="w-4 h-4" /> },
     ],
   },
   {
-    title: 'Reports',
+    title: 'Shared',
     path: '/reports',
-    icon: <MdOutlineAnalytics />,
+    icon: <MdOutlineAnalytics className="w-5 h-5" />,
     subItems: [
-      { title: 'Analytics', path: '/reports/analytics', icon: <MdTrendingUp /> },
-      { title: 'Sales', path: '/reports/sales', icon: <MdBook /> },
+      { title: 'Navbar', path: '/dashboard/shared/Navbar', icon: <MdTrendingUp className="w-4 h-4" /> },
+      { title: 'Footer', path: '/dashboard/shared/Footer', icon: <MdBook className="w-4 h-4" /> },
     ],
   },
 ];
@@ -151,8 +168,8 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="w-64 bg-black border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0">
-      <h2 className="text-2xl font-bold text-yellow-400 mb-10">Dashboard</h2>
+    <aside className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400/50 scrollbar-track-zinc-800">
+      <h2 className="text-2xl font-bold text-white mb-10 sticky top-0 bg-zinc-900 z-10 pb-4">Dashboard</h2>
       <ul className="space-y-6">
         {menuItems.map((item, index) => {
           const isActive =
@@ -167,24 +184,24 @@ const SideBar = () => {
               {hasSubItems ? (
                 <div
                   onClick={() => toggleSubMenu(index)}
-                  className={`flex items-center gap-3 text-yellow-200 hover:text-yellow-400 cursor-pointer ${
+                  className={`flex items-center gap-3 text-white hover:text-yellow-400 cursor-pointer transition-colors duration-200 ${
                     isActive ? 'text-yellow-400' : ''
                   }`}
                 >
                   {item.icon}
-                  <span>{item.title}</span>
-                  <span
-                    className={`ml-auto transform transition-transform duration-200 ${
-                      isExpanded ? 'rotate-180' : ''
-                    }`}
-                  >
-                    ▼
+                  <span className="text-base font-medium">{item.title}</span>
+                  <span className="ml-auto">
+                    {isExpanded ? (
+                      <MdExpandLess className="w-5 h-5" />
+                    ) : (
+                      <MdExpandMore className="w-5 h-5" />
+                    )}
                   </span>
                 </div>
               ) : (
                 <Link
                   href={item.path}
-                  className={`flex items-center gap-3 text-yellow-200 hover:text-yellow-400 cursor-pointer ${
+                  className={`flex items-center gap-3 text-white hover:text-yellow-400 cursor-pointer transition-colors duration-200 ${
                     isActive ? 'text-yellow-400' : ''
                   }`}
                   onClick={() => {
@@ -194,7 +211,7 @@ const SideBar = () => {
                   }}
                 >
                   {item.icon}
-                  <span>{item.title}</span>
+                  <span className="text-base font-medium">{item.title}</span>
                 </Link>
               )}
               {hasSubItems && isExpanded && (
@@ -203,7 +220,7 @@ const SideBar = () => {
                     <li key={subItem.title}>
                       <Link
                         href={subItem.path}
-                        className={`flex items-center gap-2 text-sm text-yellow-200 hover:text-yellow-400 ${
+                        className={`flex items-center gap-2 text-sm text-white hover:text-yellow-400 transition-colors duration-200 ${
                           activeSubIdx === `${index}-${subIdx}` || pathname === subItem.path
                             ? 'text-yellow-400'
                             : ''
@@ -211,7 +228,7 @@ const SideBar = () => {
                         onClick={() => setActiveSubIdx(`${index}-${subIdx}`)}
                       >
                         {subItem.icon}
-                        {subItem.title}
+                        <span className="font-normal">{subItem.title}</span>
                       </Link>
                     </li>
                   ))}

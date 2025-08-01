@@ -1,6 +1,6 @@
 import React from 'react'
 
-const heroSection = () => {
+const profile = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const heroSection = () => {
   )
 }
 
-export default heroSection
+export default profile
