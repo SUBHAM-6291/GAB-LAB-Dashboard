@@ -1,10 +1,11 @@
+
+import Banner from '@/app/_components/Private_Group/Banner/Banner'
 import React from 'react'
-import Login from '@/app/_components/login/Login'
 
 const page = () => {
   return (
     <div>
-   <Login/>
+      <Banner/>
     </div>
   )
 }
