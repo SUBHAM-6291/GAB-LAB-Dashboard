@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   MdDashboard,
   MdOutlineSettings,
@@ -81,7 +82,7 @@ const menuItems = [
     subItems: [
       { title: 'Banner', path: '/dashboard/partnership/Banner', icon: <MdImage className="w-4 h-4" /> },
       { title: 'Tailored', path: '/dashboard/partnership/Tailored', icon: <MdWeb className="w-4 h-4" /> },
-      { title: 'Benefits', path: '/dashboard/partnership/Benefits', icon: <MdImage className="w-4 h-4" /> },
+      { title: 'Benefits', path: '/dashboard/partnership/Benifits', icon: <MdImage className="w-4 h-4" /> },
       { title: 'Query', path: '/dashboard/partnership/Query', icon: <MdWeb className="w-4 h-4" /> },
     ],
   },
@@ -168,8 +169,31 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400/50 scrollbar-track-zinc-800">
-      <h2 className="text-2xl font-bold text-white mb-10 sticky top-0 bg-zinc-900 z-10 pb-4">Dashboard</h2>
+    <aside
+      className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto"
+      style={{
+        scrollbarWidth: 'none', // Firefox
+        msOverflowStyle: 'none', // IE and Edge
+      }}
+    >
+      <style jsx>{`
+        aside::-webkit-scrollbar {
+          display: none; // Chrome, Safari, and Opera
+        }
+      `}</style>
+      <div className="mb-8  top-0 bg-zinc-900 z-10">
+        <Link href="/dashboard">
+          <Image
+            src="/logo.avif"
+            alt="Brand Logo"
+            width={110}
+            height={40}
+            className="object-contain"
+            priority
+          />
+        </Link>
+      </div>
+  
       <ul className="space-y-6">
         {menuItems.map((item, index) => {
           const isActive =
