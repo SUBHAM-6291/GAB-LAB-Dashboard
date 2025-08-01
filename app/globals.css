@@ -9,3 +9,6 @@ body {
   font-family: sans-serif;
 }
 
+aside::-webkit-scrollbar {
+  display: none;
+}
