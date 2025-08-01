@@ -1,10 +1,11 @@
-import OurTeam from '@/app/_components/Our-Story/Our Team/OurTeam'
 import React from 'react'
+import Footer from '@/app/_components/shared/Footer/Footer'
 
 const page = () => {
   return (
     <div>
-      <OurTeam/>
+      <Footer/>
+      
     </div>
   )
 }
