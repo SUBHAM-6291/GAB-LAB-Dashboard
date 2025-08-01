@@ -168,7 +168,7 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400/50 scrollbar-track-zinc-800">
+    <aside className="w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 hidden md:block h-screen fixed top-0 left-0 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400/50 scrollbar-track-zinc-800 z-20">
       <h2 className="text-2xl font-bold text-white mb-10 sticky top-0 bg-zinc-900 z-10 pb-4">Dashboard</h2>
       <ul className="space-y-6">
         {menuItems.map((item, index) => {
