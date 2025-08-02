@@ -1,3 +1,4 @@
+// app/dashboard/partnership/Tailored.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -31,7 +32,7 @@ const Tailored = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 p-8 md:ml-64">
+    <div className=" bg-zinc-950 main-container ">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <MdEdit className="text-yellow-400 w-6 h-6" />
