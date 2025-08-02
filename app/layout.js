@@ -23,9 +23,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex min-h-screen">
+        <div className="">
           {/* Sidebar on the left */}
-          <aside className="hidden lg:block lg:w-[20%] xl:w-[15%] text-white">
+          <aside className="">
             <SideBar />
           </aside>
 
