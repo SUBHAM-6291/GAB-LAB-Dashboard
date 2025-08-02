@@ -15,26 +15,25 @@ import "@/components/ui/professional-ui.css";
 
 const Tailored = () => {
   // Initial state for static fields
-  const initialFormValues = {
-    leftHeading: 'Culinary Journeys Designed for Your Clients',
-    leftDescription:
-      'Unlock a variety of hands-on cooking adventures rooted in authentic Spanish and Mediterranean cuisine — all tailored to delight your clients.\nFrom the award-winning Paella Class to sweet baking escapes and vibrant market-to-plate experiences, every journey is chef-led and unforgettable.',
-    packetsText: '📄 Download our FREE informational packets:',
-    pdfButton1: 'Partnership Incentive Program – English Version (PDF)',
-    pdfButton2: 'Programa de Incentivos para Asociaciones – Castillano (PDF)',
-    pdfButton3: 'Ultimate Paella Class Experience Guide – English Version (PDF)',
-    pdfButton4: 'Guía de Experiencias de Clases de Paella – Castillano (PDF)',
-    rightHeading: 'Why Partner with Gastronomic Arts?',
-    rightDescription:
-      'Offer your clients more than just a meal — deliver curated culinary moments they’ll never forget. Our partnerships help you create tailored, cultural, chef-led experiences.',
-    ctaButton: 'Join Our Partner Program',
-  };
+const initialFormValues = {
+  leftHeading: '',
+  leftDescription: '',
+  packetsText: '',
+  pdfButton1: '',
+  pdfButton2: '',
+  pdfButton3: '',
+  pdfButton4: '',
+  rightHeading: '',
+  rightDescription: '',
+  ctaButton: '',
+};
 
-  const initialFeatures = [
-    { title: 'Authentic Experiences', description: 'Each class captures the heart of Spanish gastronomy — from classic paella to traditional sweets.' },
-    { title: 'Fully Customized', description: 'Every session is tailored to match your audience — solo travelers, families, or corporate groups.' },
-    { title: 'Cultural Immersion', description: 'Local markets, chef stories, and hands-on cooking connect your clients deeply with Barcelona.' },
-  ];
+const initialFeatures = [
+  { title: '', description: '' },
+  { title: '', description: '' },
+  { title: '', description: '' },
+];
+
 
   // State for form fields and features
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -90,23 +89,6 @@ const Tailored = () => {
     setSubmitConfirmation(false);
     const dataToSubmit = { ...formValues, features };
     console.log('Updated Tailored Partnership Section Data:', dataToSubmit);
-    // Example API call (uncomment to use):
-    // try {
-    //   await fetch('/api/update-partnership-tailored', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(dataToSubmit),
-    //   });
-    //   toast.success('Tailored Partnership content has been saved successfully!', {
-    //     duration: 2000,
-    //     className: 'toast-success',
-    //   });
-    // } catch (error) {
-    //   toast.error('Failed to save content. Please try again.', {
-    //     duration: 2000,
-    //     className: 'toast-error',
-    //   });
-    // }
     toast.success('Tailored Partnership content has been saved successfully!', {
       duration: 2000,
       className: 'toast-success',
@@ -125,11 +107,11 @@ const Tailored = () => {
   };
 
   return (
-    <div className="bg-zinc-950 main-container">
-      <div className="max-w-4xl mx-auto py-8">
+    <div className="main-container">
+      <div>
         <div className="flex items-center gap-3 mb-8">
           <MdEdit className="text-yellow-400 w-6 h-6" />
-          <h2 className="text-3xl font-bold text-white">Edit Tailored Partnership Section</h2>
+          <h2 className="heading">Edit Tailored Partnership Section</h2>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -138,13 +120,11 @@ const Tailored = () => {
           <div className="space-y-6">
             {/* Left Column: Crafted Experiences */}
             <div>
-              <h3 className="text-lg font-semibold text-yellow-400 mb-4">Left Column: Crafted Experiences</h3>
+              <h3 className="sub-heading">Left Column: Crafted Experiences</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Left Heading */}
                 <div>
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    Heading (Left Column)
-                  </label>
+                  <label className="label">Heading (Left Column)</label>
                   <input
                     type="text"
                     value={formValues.leftHeading}
@@ -155,9 +135,7 @@ const Tailored = () => {
                 </div>
                 {/* Left Description */}
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    Description (Left Column)
-                  </label>
+                  <label className="label">Description (Left Column)</label>
                   <textarea
                     value={formValues.leftDescription}
                     onChange={(e) => handleChange('leftDescription', e.target.value)}
@@ -168,9 +146,7 @@ const Tailored = () => {
                 </div>
                 {/* Informational Packets Text */}
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    Informational Packets Text
-                  </label>
+                  <label className="label">Informational Packets Text</label>
                   <input
                     type="text"
                     value={formValues.packetsText}
@@ -182,9 +158,7 @@ const Tailored = () => {
                 {/* PDF Button Labels */}
                 {[1, 2, 3, 4].map((num) => (
                   <div key={num}>
-                    <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                      PDF Button {num} Label
-                    </label>
+                    <label className="label">PDF Button {num} Label</label>
                     <input
                       type="text"
                       value={formValues[`pdfButton${num}`]}
@@ -199,13 +173,11 @@ const Tailored = () => {
 
             {/* Right Column: Let’s Collaborate */}
             <div>
-              <h3 className="text-lg font-semibold text-yellow-400 mb-4">Right Column: Let’s Collaborate</h3>
+              <h3 className="sub-heading">Right Column: Let’s Collaborate</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Right Heading */}
                 <div>
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    Heading (Right Column)
-                  </label>
+                  <label className="label">Heading (Right Column)</label>
                   <input
                     type="text"
                     value={formValues.rightHeading}
@@ -216,9 +188,7 @@ const Tailored = () => {
                 </div>
                 {/* Right Description */}
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    Description (Right Column)
-                  </label>
+                  <label className="label">Description (Right Column)</label>
                   <textarea
                     value={formValues.rightDescription}
                     onChange={(e) => handleChange('rightDescription', e.target.value)}
@@ -230,9 +200,7 @@ const Tailored = () => {
                 {/* Dynamic Features */}
                 <div className="md:col-span-2">
                   <div className="flex items-center justify-between mb-4">
-                    <label className="text-xs font-semibold text-yellow-400 uppercase tracking-wide">
-                      Features
-                    </label>
+                    <label className="label">Features</label>
                     <button
                       type="button"
                       onClick={addFeature}
@@ -245,7 +213,7 @@ const Tailored = () => {
                   {features.map((feature, index) => (
                     <div key={index} className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-sm font-semibold text-white">Feature {index + 1}</h4>
+                        <h4 className="feature-title">Feature {index + 1}</h4>
                         {features.length > 1 && (
                           <button
                             type="button"
@@ -258,9 +226,7 @@ const Tailored = () => {
                       </div>
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                            Feature {index + 1} Title
-                          </label>
+                          <label className="label">Feature {index + 1} Title</label>
                           <input
                             type="text"
                             value={feature.title}
@@ -270,9 +236,7 @@ const Tailored = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                            Feature {index + 1} Description
-                          </label>
+                          <label className="label">Feature {index + 1} Description</label>
                           <textarea
                             value={feature.description}
                             onChange={(e) => handleFeatureChange(index, 'description', e.target.value)}
@@ -287,9 +251,7 @@ const Tailored = () => {
                 </div>
                 {/* CTA Button */}
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-yellow-400 uppercase tracking-wide mb-2 transform transition-transform duration-200 hover:scale-105">
-                    CTA Button Label
-                  </label>
+                  <label className="label">CTA Button Label</label>
                   <input
                     type="text"
                     value={formValues.ctaButton}
@@ -306,22 +268,22 @@ const Tailored = () => {
           <div className="mt-8 flex justify-end space-x-4">
             <button
               type="submit"
-              className="relative py-2 px-4 bg-[#111] border border-gray-600 text-white text-sm font-serif uppercase tracking-wide rounded-lg shadow-md shadow-black/50 overflow-hidden group cursor-pointer"
+              className="relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
             >
               <span className="relative z-10 group-hover:text-black transition-colors duration-300">
                 Save Changes
               </span>
-              <span className="absolute inset-0 bg-yellow-400 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
             </button>
             <button
               type="button"
               onClick={() => setResetConfirmation(true)}
-              className="relative py-2 px-4 bg-[#111] border border-gray-600 text-white text-sm font-serif uppercase tracking-wide rounded-lg shadow-md shadow-black/50 overflow-hidden group cursor-pointer"
+              className="relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
             >
               <span className="relative z-10 group-hover:text-black transition-colors duration-300">
                 Reset
               </span>
-              <span className="absolute inset-0 bg-red-400 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
             </button>
           </div>
         </form>
