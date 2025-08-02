@@ -2,6 +2,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SideBar from "./_components/Side-Bar/SideBar";
 
+
+
+import { Toaster } from "@/components/ui/sonner"
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,7 +36,11 @@ export default function RootLayout({ children }) {
 
           {/* Main content on the right */}
           <main className="flex-1 section_space overflow-auto bg-zinc-800">
+            
             {children}
+<Toaster
+          position="top-center"
+        />
           </main>
         </div>
       </body>
