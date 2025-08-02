@@ -1,11 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SideBar from "./_components/Side-Bar/SideBar";
-
-
-
-import { Toaster } from "@/components/ui/sonner"
-
+import { Toaster } from "@/components/ui/sonner";
+import SidebarWrapper from "./SidebarWrapper"; // client wrapper
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,19 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="">
-          {/* Sidebar on the left */}
-          <aside className="">
-            <SideBar />
-          </aside>
-
-          {/* Main content on the right */}
-          <main className="flex-1 section_space overflow-auto bg-zinc-800">
-            
+        <div>
+          <SidebarWrapper /> 
+          <main>
             {children}
-<Toaster
-          position="top-center"
-        />
+            <Toaster position="top-center" />
           </main>
         </div>
       </body>
