@@ -14,34 +14,30 @@ import { toast } from 'sonner';
 import "@/components/ui/professional-ui.css";
 
 const Tailored = () => {
-  // Initial state for static fields
-const initialFormValues = {
-  leftHeading: '',
-  leftDescription: '',
-  packetsText: '',
-  pdfButton1: '',
-  pdfButton2: '',
-  pdfButton3: '',
-  pdfButton4: '',
-  rightHeading: '',
-  rightDescription: '',
-  ctaButton: '',
-};
+  const initialFormValues = {
+    leftHeading: '',
+    leftDescription: '',
+    packetsText: '',
+    pdfButton1: '',
+    pdfButton2: '',
+    pdfButton3: '',
+    pdfButton4: '',
+    rightHeading: '',
+    rightDescription: '',
+    ctaButton: '',
+  };
 
-const initialFeatures = [
-  { title: '', description: '' },
-  { title: '', description: '' },
-  { title: '', description: '' },
-];
+  const initialFeatures = [
+    { title: '', description: '' },
+    { title: '', description: '' },
+    { title: '', description: '' },
+  ];
 
-
-  // State for form fields and features
   const [formValues, setFormValues] = useState(initialFormValues);
   const [features, setFeatures] = useState(initialFeatures);
   const [submitConfirmation, setSubmitConfirmation] = useState(false);
   const [resetConfirmation, setResetConfirmation] = useState(false);
 
-  // Handle changes for static fields
   const handleChange = (field, value) => {
     setFormValues((prev) => ({
       ...prev,
@@ -49,7 +45,6 @@ const initialFeatures = [
     }));
   };
 
-  // Handle changes for feature fields
   const handleFeatureChange = (index, field, value) => {
     setFeatures((prev) => {
       const newFeatures = [...prev];
@@ -58,17 +53,14 @@ const initialFeatures = [
     });
   };
 
-  // Add a new feature
   const addFeature = () => {
     setFeatures((prev) => [...prev, { title: '', description: '' }]);
   };
 
-  // Remove a feature
   const removeFeature = (index) => {
     setFeatures((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const allEmpty =
@@ -84,7 +76,6 @@ const initialFeatures = [
     }
   };
 
-  // Confirm save action
   const confirmSave = async () => {
     setSubmitConfirmation(false);
     const dataToSubmit = { ...formValues, features };
@@ -95,7 +86,6 @@ const initialFeatures = [
     });
   };
 
-  // Handle form reset
   const handleReset = () => {
     setFormValues(initialFormValues);
     setFeatures(initialFeatures);
@@ -129,7 +119,7 @@ const initialFeatures = [
                     type="text"
                     value={formValues.leftHeading}
                     onChange={(e) => handleChange('leftHeading', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     placeholder="Enter heading for Crafted Experiences section"
                   />
                 </div>
@@ -139,7 +129,7 @@ const initialFeatures = [
                   <textarea
                     value={formValues.leftDescription}
                     onChange={(e) => handleChange('leftDescription', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
                     placeholder="Enter description for Crafted Experiences section"
                   />
@@ -151,7 +141,7 @@ const initialFeatures = [
                     type="text"
                     value={formValues.packetsText}
                     onChange={(e) => handleChange('packetsText', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     placeholder="Enter text for informational packets"
                   />
                 </div>
@@ -163,7 +153,7 @@ const initialFeatures = [
                       type="text"
                       value={formValues[`pdfButton${num}`]}
                       onChange={(e) => handleChange(`pdfButton${num}`, e.target.value)}
-                      className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                      className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                       placeholder={`Enter label for PDF Button ${num}`}
                     />
                   </div>
@@ -182,7 +172,7 @@ const initialFeatures = [
                     type="text"
                     value={formValues.rightHeading}
                     onChange={(e) => handleChange('rightHeading', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     placeholder="Enter heading for Let’s Collaborate section"
                   />
                 </div>
@@ -192,7 +182,7 @@ const initialFeatures = [
                   <textarea
                     value={formValues.rightDescription}
                     onChange={(e) => handleChange('rightDescription', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
                     placeholder="Enter description for Let’s Collaborate section"
                   />
@@ -231,7 +221,7 @@ const initialFeatures = [
                             type="text"
                             value={feature.title}
                             onChange={(e) => handleFeatureChange(index, 'title', e.target.value)}
-                            className="w-full bg-zinc-900 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                            className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
                             placeholder={`Enter title for Feature ${index + 1}`}
                           />
                         </div>
@@ -240,7 +230,7 @@ const initialFeatures = [
                           <textarea
                             value={feature.description}
                             onChange={(e) => handleFeatureChange(index, 'description', e.target.value)}
-                            className="w-full bg-zinc-900 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                            className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
                             rows={3}
                             placeholder={`Enter description for Feature ${index + 1}`}
                           />
@@ -256,7 +246,7 @@ const initialFeatures = [
                     type="text"
                     value={formValues.ctaButton}
                     onChange={(e) => handleChange('ctaButton', e.target.value)}
-                    className="w-full bg-zinc-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition-all duration-200 hover:border-yellow-400/50"
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     placeholder="Enter label for CTA button"
                   />
                 </div>
@@ -264,28 +254,30 @@ const initialFeatures = [
             </div>
           </div>
 
-          {/* Submit & Reset Buttons */}
-          <div className="mt-8 flex justify-end space-x-4">
-            <button
-              type="submit"
-              className="relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
-            >
-              <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                Save Changes
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setResetConfirmation(true)}
-              className="relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
-            >
-              <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                Reset
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-            </button>
-          </div>
+{/* Submit & Reset Buttons */}
+<div className="mt-8 flex flex-col sm:flex-row sm:justify-end sm:space-x-4 space-y-3 sm:space-y-0 w-full">
+  <button
+    type="submit"
+    className="w-full sm:w-auto relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
+  >
+    <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+      saveChanges
+    </span>
+    <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setResetConfirmation(true)}
+    className="w-full sm:w-auto relative py-2.5 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#000000] border border-gray-700 text-white text-sm font-semibold tracking-wider uppercase rounded-lg shadow-lg shadow-black/40 overflow-hidden group cursor-pointer transition-all duration-300"
+  >
+    <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+      reset
+    </span>
+    <span className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+  </button>
+</div>
+
         </form>
 
         {/* Submit Confirmation */}
