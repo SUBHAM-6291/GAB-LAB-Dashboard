@@ -97,8 +97,9 @@ const Tailored = () => {
   };
 
   const handleReset = () => {
+
     setResetConfirmation(true);
-  };
+
 
   const confirmReset = () => {
     setFormValues(initialFormValues);
@@ -291,7 +292,9 @@ const Tailored = () => {
           </div>
 
           {/* Submit & Reset Buttons */}
+
           <ButtonGroup onResetClick={handleReset} />
+
         </form>
 
         {/* Submit Confirmation */}
