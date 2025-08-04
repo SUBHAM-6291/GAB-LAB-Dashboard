@@ -203,11 +203,11 @@ const SideBar = ({ topbarText = 'Dashboard' }) => {
           {/* Profile Icon: Yellow hover without zoom */}
           <Link href="/dashboard/Profile/Profile">
             <MdPeople
-              className="w-[28px] md:w-[30px] h-auto text-gray-300 hover:text-yellow-400 hover:shadow-[0_0_8px_rgba(234,179,8,0.5)] transition-colors duration-200 rounded-full p-1"
+              className="w-[28px] md:w-[30px] h-auto text-gray-300 rounded-full p-1"
               aria-label="Profile"
             />
           </Link>
-          {/* Hamburger Icon: Yellow hover without zoom */}
+          {/* Hamburger Icon: Yellow hover without zom */}
           <button
             onClick={toggleSidebar}
             className="md:hidden w-[28px] md:w-[30px] h-auto text-gray-300 hover:text-yellow-400 hover:shadow-[0_0_8px_rgba(234,179,8,0.5)] transition-colors duration-200 rounded-full p-1"
