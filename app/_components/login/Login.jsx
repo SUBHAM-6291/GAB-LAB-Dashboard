@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaEnvelope, FaKey, FaUser, FaFacebookF, FaApple } from 'react-icons/fa';
+import { FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+
 import { FcGoogle } from 'react-icons/fc';
 
 export default function LoginPage() {
@@ -40,23 +42,30 @@ export default function LoginPage() {
             src="/cooking.png"
             alt="Cooking Theme"
             fill
-            className="object-cover hover:scale-105 hover:rotate-1 transition-all duration-500"
+            className="object-cover hover:scale-105 transition-all duration-500"
           />
         </motion.div>
 
-        {/* Right Panel */}
-        <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 text-white relative z-10">
-          <motion.h2
-            key={isSignUp ? 'SignUp' : 'Login'}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl font-bold text-yellow-400 text-center mb-6"
+        {/* Right Panel with Transition */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={isSignUp ? 'SignUpPanel' : 'LoginPanel'}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.5 }}
+            className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 text-white relative z-10"
           >
-            {isSignUp ? 'Create Account' : 'Welcome Back'}
-          </motion.h2>
+            <motion.h2
+              key={isSignUp ? 'SignUp' : 'Login'}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl font-bold text-yellow-400 text-center mb-6"
+            >
+              {isSignUp ? 'Create Account' : 'Welcome Back'}
+            </motion.h2>
 
-          <AnimatePresence mode="wait">
             <motion.form
               key={isSignUp ? 'signup-form' : 'login-form'}
               onSubmit={handleSubmit}
@@ -92,62 +101,74 @@ export default function LoginPage() {
                 />
                 <FaKey className="absolute left-2 top-1/2 -translate-y-1/2 text-yellow-300" />
               </div>
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                type="submit"
-                className="w-full py-3 cursor-pointer rounded-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 text-black font-bold text-lg shadow-lg transition-all hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              >
-                {isSignUp ? 'Sign Up' : 'Login'}
-              </motion.button>
+             <motion.button
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.97 }}
+  type="submit"
+  className="w-full py-3 cursor-pointer rounded-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 text-black font-bold text-lg shadow-lg transition-all hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-yellow-500 flex items-center justify-center gap-2"
+>
+  {isSignUp ? (
+    <>
+      <FaUserPlus className="text-lg" />
+      Sign Up
+    </>
+  ) : (
+    <>
+      <FaSignInAlt className="text-lg" />
+      Login
+    </>
+  )}
+</motion.button>
+
             </motion.form>
-          </AnimatePresence>
 
-          {/* Social Buttons */}
-          <div className="mt-6 flex items-center gap-3 justify-center">
-            <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3 rounded-full text-yellow-200 cursor-pointer transition">
-              <FaFacebookF />
-            </button>
-            <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3  rounded-full cursor-pointer transition">
-              <FcGoogle className="text-white" size={20} />
-            </button>
-            <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3 rounded-full cursor-pointer text-yellow-200 transition">
-              <FaApple />
-            </button>
-          </div>
+            {/* Social Buttons */}
+            <div className="mt-6 flex items-center gap-3 justify-center">
+              <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3 rounded-full text-yellow-200 cursor-pointer transition">
+                <FaFacebookF />
+              </button>
+              <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3 rounded-full cursor-pointer transition">
+                <FcGoogle className="text-white" size={20} />
+              </button>
+              <button className="bg-yellow-400/10 hover:bg-yellow-400/20 p-3 rounded-full cursor-pointer text-yellow-200 transition">
+                <FaApple />
+              </button>
+            </div>
 
-          {/* Footer Text */}
-          <div className="mt-6 text-center text-yellow-200 text-sm space-y-2">
-            {isSignUp ? (
-              <p>
-                Already have an account?{' '}
-                <button
-                  onClick={() => setIsSignUp(false)}
-                  className="underline hover:text-yellow-100"
-                >
-                  Sign In
-                </button>
-              </p>
-            ) : (
-              <>
+            {/* Footer Text */}
+            <div className="mt-6 text-center text-yellow-200 text-sm space-y-2">
+              {isSignUp ? (
                 <p>
-                  Don’t have an account?{' '}
+                  Already have an account?{' '}
                   <button
-                    onClick={() => setIsSignUp(true)}
-                    className="underline cursor-pointer hover:text-yellow-100"
+                    onClick={() => setIsSignUp(false)}
+                    className="underline hover:text-yellow-100"
                   >
-                    Sign Up
+                    Sign In
                   </button>
                 </p>
-                <p>
-                  <a href="#" className="underline cursor-pointer hover:text-yellow-100">
-                    Forgot Password?
-                  </a>
-                </p>
-              </>
-            )}
-          </div>
-        </div>
+              ) : (
+                <>
+                  <p>
+                    <span className="text-white">Don’t have an account?</span>{' '}
+                    <button
+                      onClick={() => setIsSignUp(true)}
+                      className="underline cursor-pointer hover:text-yellow-100"
+                    >
+                      Sign Up
+                    </button>
+                  </p>
+                  <p>
+                    <a href="#" className="underline cursor-pointer hover:text-yellow-100">
+                      Forgot Password?
+                    </a>
+                  </p>
+                </>
+
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </motion.div>
     </div>
   );
