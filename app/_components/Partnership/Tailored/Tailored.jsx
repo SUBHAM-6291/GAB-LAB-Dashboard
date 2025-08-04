@@ -16,6 +16,7 @@ import ButtonGroup from '../../Utilites/Btn';
 
 const Tailored = () => {
   const initialFormValues = {
+    leftTooltip: '',
     leftHeading: '',
     leftDescription: '',
     packetsText: '',
@@ -23,6 +24,7 @@ const Tailored = () => {
     pdfButton2: '',
     pdfButton3: '',
     pdfButton4: '',
+    rightTooltip: '',
     rightHeading: '',
     rightDescription: '',
     ctaButton: '',
@@ -59,7 +61,14 @@ const Tailored = () => {
   };
 
   const removeFeature = (index) => {
-    setFeatures((prev) => prev.filter((_, i) => i !== index));
+    if (features.length > 1) {
+      setFeatures((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      toast.error('At least one feature is required.', {
+        duration: 1000,
+        className: 'toast-error',
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -88,8 +97,9 @@ const Tailored = () => {
   };
 
   const handleReset = () => {
-    setResetConfirmation(true); // Show confirmation dialog instead of resetting directly
-  };
+
+    setResetConfirmation(true);
+
 
   const confirmReset = () => {
     setFormValues(initialFormValues);
@@ -117,6 +127,17 @@ const Tailored = () => {
             <div>
               <h3 className="sub-heading">Left Column: Crafted Experiences</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Left Tooltip */}
+                <div>
+                  <label className="label">Tooltip (Left Column)</label>
+                  <input
+                    type="text"
+                    value={formValues.leftTooltip}
+                    onChange={(e) => handleChange('leftTooltip', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter tooltip for Crafted Experiences section"
+                  />
+                </div>
                 {/* Left Heading */}
                 <div>
                   <label className="label">Heading (Left Column)</label>
@@ -170,6 +191,17 @@ const Tailored = () => {
             <div>
               <h3 className="sub-heading">Right Column: Let’s Collaborate</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Right Tooltip */}
+                <div>
+                  <label className="label">Tooltip (Right Column)</label>
+                  <input
+                    type="text"
+                    value={formValues.rightTooltip}
+                    onChange={(e) => handleChange('rightTooltip', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter tooltip for Let’s Collaborate section"
+                  />
+                </div>
                 {/* Right Heading */}
                 <div>
                   <label className="label">Heading (Right Column)</label>
@@ -260,7 +292,8 @@ const Tailored = () => {
           </div>
 
           {/* Submit & Reset Buttons */}
-          <ButtonGroup onResetClick={() => setResetConfirmation(true)} />
+
+          <ButtonGroup onResetClick={handleReset} />
 
         </form>
 
