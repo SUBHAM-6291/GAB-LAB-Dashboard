@@ -159,6 +159,11 @@ const menuItems = [
     title: "OurStory",
     icon: <MdHistory className="w-5 h-5" />, // Updated icon
     subItems: [
+       {
+        title: "Banner",
+        path: "/dashboard/Our-Story/Banner",
+        icon: <MdEvent className="w-4 h-4" />,
+      },
       {
         title: "AboutUs",
         path: "/dashboard/Our-Story/About-us",
@@ -200,6 +205,7 @@ const menuItems = [
     title: "Partnership",
     icon: <MdHandshake className="w-5 h-5" />, // Updated icon
     subItems: [
+      
       {
         title: "Banner",
         path: "/dashboard/partnership/Banner",

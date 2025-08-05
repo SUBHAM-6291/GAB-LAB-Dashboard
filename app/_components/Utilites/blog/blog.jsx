@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MdEdit } from 'react-icons/md';
+import { MdEdit, MdAddCircle, MdRemoveCircle } from 'react-icons/md';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -26,7 +26,13 @@ const BlogPostForm = () => {
     suggestedPostsHeading: '',
   };
 
+  const initialSuggestedPosts = [
+    { title: '', link: '' },
+    { title: '', link: '' },
+  ];
+
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [suggestedPosts, setSuggestedPosts] = useState(initialSuggestedPosts);
   const [submitConfirmation, setSubmitConfirmation] = useState(false);
   const [resetConfirmation, setResetConfirmation] = useState(false);
 
@@ -38,7 +44,7 @@ const BlogPostForm = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Only allow one file
+    const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
         toast.error('Please select an image file for the blog post.', {
@@ -54,9 +60,34 @@ const BlogPostForm = () => {
     }
   };
 
+  const handleSuggestedPostChange = (index, field, value) => {
+    setSuggestedPosts((prev) => {
+      const newPosts = [...prev];
+      newPosts[index] = { ...newPosts[index], [field]: value };
+      return newPosts;
+    });
+  };
+
+  const addSuggestedPost = () => {
+    setSuggestedPosts((prev) => [...prev, { title: '', link: '' }]);
+  };
+
+  const removeSuggestedPost = (index) => {
+    if (suggestedPosts.length > 1) {
+      setSuggestedPosts((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      toast.error('At least one suggested post is required.', {
+        duration: 1000,
+        className: 'toast-error',
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allEmpty = Object.values(formValues).every((value) => value === '' || value === null);
+    const allEmpty =
+      Object.values(formValues).every((value) => value === '' || value === null) &&
+      suggestedPosts.every((post) => post.title.trim() === '' && post.link.trim() === '');
     if (allEmpty) {
       toast.error('Please fill at least one field or select an image before submitting.', {
         duration: 1000,
@@ -72,6 +103,7 @@ const BlogPostForm = () => {
     const dataToSubmit = {
       ...formValues,
       imageFile: formValues.imageFile ? formValues.imageFile.name : null,
+      suggestedPosts,
     };
     console.log('Updated Blog Post Data:', dataToSubmit);
     toast.success('Blog post content has been saved successfully!', {
@@ -86,6 +118,7 @@ const BlogPostForm = () => {
 
   const confirmReset = () => {
     setFormValues(initialFormValues);
+    setSuggestedPosts(initialSuggestedPosts);
     toast.success('Form has been reset.', {
       duration: 1500,
       className: 'toast-success',
@@ -116,7 +149,7 @@ const BlogPostForm = () => {
                     value={formValues.category}
                     onChange={(e) => handleChange('category', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter category for the blog post (e.g., Spanish Cuisine)"
+                    placeholder="Enter category for the blog post "
                   />
                   <p className="text-gray-400 text-sm mt-2">
                     The category or topic of the blog post, displayed as the main heading.
@@ -129,7 +162,7 @@ const BlogPostForm = () => {
                     value={formValues.title}
                     onChange={(e) => handleChange('title', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter title for the blog post (e.g., Paella Secrets)"
+                    placeholder="Enter title for the blog post "
                   />
                   <p className="text-gray-400 text-sm mt-2">
                     The title of the blog post, displayed below the image.
@@ -142,7 +175,7 @@ const BlogPostForm = () => {
                     onChange={(e) => handleChange('shortDescription', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={3}
-                    placeholder="Enter a short description for the blog post (e.g., Learn the art of making authentic paella...)"
+                    placeholder="Enter a short description for the blog post "
                   />
                   <p className="text-gray-400 text-sm mt-2">
                     A brief summary of the blog post, displayed if different from the long description.
@@ -168,7 +201,7 @@ const BlogPostForm = () => {
                     value={formValues.author}
                     onChange={(e) => handleChange('author', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter the author’s name (e.g., John Doe)"
+                    placeholder="Enter the author’s name "
                   />
                   <p className="text-gray-400 text-sm mt-2">
                     The name of the blog post’s author, displayed in the header.
@@ -189,10 +222,95 @@ const BlogPostForm = () => {
                 </div>
               </div>
             </div>
-            {/* Suggested Posts */}
-
             {/* Media Upload */}
- 
+            <div>
+              <h3 className="feature-title mb-4">Media Upload</h3>
+              <div>
+                <label className="label">Blog Post Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                />
+                {formValues.imageFile && (
+                  <p className="text-gray-400 text-sm mt-2">
+                    Selected file: {formValues.imageFile.name}
+                  </p>
+                )}
+                <p className="text-gray-400 text-sm mt-2">
+                  Upload an image for the blog post .
+                </p>
+              </div>
+            </div>
+            {/* Suggested Posts */}
+            <div>
+              <h3 className="feature-title mb-4">Suggested Posts</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="label">Suggested Posts Heading</label>
+                  <input
+                    type="text"
+                    value={formValues.suggestedPostsHeading}
+                    onChange={(e) => handleChange('suggestedPostsHeading', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter heading for suggested posts "
+                  />
+                  <p className="text-gray-400 text-sm mt-2">
+                    The heading for the suggested posts section.
+                  </p>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="label">Suggested Posts</label>
+                  <button
+                    type="button"
+                    onClick={addSuggestedPost}
+                    className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
+                  >
+                    <MdAddCircle className="w-5 h-5" />
+                    <span>Add Post</span>
+                  </button>
+                </div>
+                {suggestedPosts.map((post, index) => (
+                  <div key={index} className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="feature-title">Suggested Post {index + 1}</h4>
+                      {suggestedPosts.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeSuggestedPost(index)}
+                          className="text-red-400 hover:text-red-300 transition-colors duration-200"
+                        >
+                          <MdRemoveCircle className="w-5 h-5" />
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="label">Post {index + 1} Title</label>
+                        <input
+                          type="text"
+                          value={post.title}
+                          onChange={(e) => handleSuggestedPostChange(index, 'title', e.target.value)}
+                          className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                          placeholder={`Enter title for Suggested Post ${index + 1}`}
+                        />
+                      </div>
+                      <div>
+                        <label className="label">Post {index + 1} Link</label>
+                        <input
+                          type="text"
+                          value={post.link}
+                          onChange={(e) => handleSuggestedPostChange(index, 'link', e.target.value)}
+                          className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                          placeholder={`Enter link for Suggested Post ${index + 1} `}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           <ButtonGroup onResetClick={handleReset} />
         </form>

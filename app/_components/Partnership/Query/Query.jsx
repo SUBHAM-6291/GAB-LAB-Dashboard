@@ -14,34 +14,39 @@ import { toast } from 'sonner';
 import '@/components/ui/professional-ui.css';
 import ButtonGroup from '@/app/_components/Utilites/Btn'; // Adjust the import path as needed
 
-const QuestionnaireFormForm = () => {
-  const initialSection = {
-    heading: '',
-    fields: [
-      { name: '', type: 'text', label: '', options: '', placeholder: '', required: false },
-    ],
-  };
-
+const QuestionnaireForm = () => {
   const initialFormValues = {
-    sectionTooltip: '',
-    sectionHeading: '',
-    sectionDescription: '',
-    nextButtonLabel: '',
-    previousButtonLabel: '',
-    submitButtonLabel: '',
+    tooltip: '',
+    heading: '',
+    description: '',
+    querySectionHeading: '',
+    thankYouLogo: null,
     thankYouTooltip: '',
     thankYouHeading: '',
     thankYouDescription: '',
-    thankYouBackToHomeLabel: '',
-    backgroundImageFile: null,
-    thankYouBackgroundImageFile: null,
-    sections: [
-      { ...initialSection, heading: '' },
-      { ...initialSection, heading: '' },
-    ],
+    thankYouButton1Label: '',
+    thankYouButton1Link: '',
+    thankYouButton2Label: '',
+    thankYouButton2Link: '',
+    thankYouButton3Label: '',
+    thankYouButton3Link: '',
   };
 
+  const initialQueries = [
+    { title: '', category: '', response: '' },
+    { title: '', category: '', response: '' },
+  ];
+
+  const initialSocialMediaButtons = [
+    { label: '', link: '' },
+    { label: '', link: '' },
+  ];
+
+  const queryCategories = ['General', 'Technical', 'Billing', 'Support', 'Other'];
+
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [queries, setQueries] = useState(initialQueries);
+  const [socialMediaButtons, setSocialMediaButtons] = useState(initialSocialMediaButtons);
   const [submitConfirmation, setSubmitConfirmation] = useState(false);
   const [resetConfirmation, setResetConfirmation] = useState(false);
 
@@ -52,84 +57,11 @@ const QuestionnaireFormForm = () => {
     }));
   };
 
-  const handleSectionChange = (sectionIndex, field, value) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex] = { ...newSections[sectionIndex], [field]: value };
-      return { ...prev, sections: newSections };
-    });
-  };
-
-  const handleFieldChange = (sectionIndex, fieldIndex, field, value) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex].fields[fieldIndex] = {
-        ...newSections[sectionIndex].fields[fieldIndex],
-        [field]: value,
-      };
-      return { ...prev, sections: newSections };
-    });
-  };
-
-  const addSection = () => {
-    setFormValues((prev) => ({
-      ...prev,
-      sections: [...prev.sections, { ...initialSection, heading: '' }],
-    }));
-  };
-
-  const removeSection = (sectionIndex) => {
-    if (formValues.sections.length > 1) {
-      setFormValues((prev) => ({
-        ...prev,
-        sections: prev.sections.filter((_, i) => i !== sectionIndex),
-      }));
-    } else {
-      toast.error('At least one section is required.', {
-        duration: 1000,
-        className: 'toast-error',
-      });
-    }
-  };
-
-  const addField = (sectionIndex) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex].fields.push({
-        name: '',
-        type: 'text',
-        label: '',
-        options: '',
-        placeholder: '',
-        required: false,
-      });
-      return { ...prev, sections: newSections };
-    });
-  };
-
-  const removeField = (sectionIndex, fieldIndex) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      if (newSections[sectionIndex].fields.length > 1) {
-        newSections[sectionIndex].fields = newSections[sectionIndex].fields.filter(
-          (_, i) => i !== fieldIndex
-        );
-        return { ...prev, sections: newSections };
-      } else {
-        toast.error('At least one field is required per section.', {
-          duration: 1000,
-          className: 'toast-error',
-        });
-        return prev;
-      }
-    });
-  };
-
-  const handleFileChange = (field, e) => {
+  const handleLogoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        toast.error(`Please select an image file for ${field.replace(/([A-Z])/g, ' $1').trim()}.`, {
+        toast.error('Please select an image file for the Thank You page logo.', {
           duration: 1000,
           className: 'toast-error',
         });
@@ -137,25 +69,65 @@ const QuestionnaireFormForm = () => {
       }
       setFormValues((prev) => ({
         ...prev,
-        [field]: file,
+        thankYouLogo: file,
       }));
+    }
+  };
+
+  const handleQueryChange = (index, field, value) => {
+    setQueries((prev) => {
+      const newQueries = [...prev];
+      newQueries[index] = { ...newQueries[index], [field]: value };
+      return newQueries;
+    });
+  };
+
+  const addQuery = () => {
+    setQueries((prev) => [...prev, { title: '', category: '', response: '' }]);
+  };
+
+  const removeQuery = (index) => {
+    if (queries.length > 1) {
+      setQueries((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      toast.error('At least one query is required.', {
+        duration: 1000,
+        className: 'toast-error',
+      });
+    }
+  };
+
+  const handleSocialMediaButtonChange = (index, field, value) => {
+    setSocialMediaButtons((prev) => {
+      const newButtons = [...prev];
+      newButtons[index] = { ...newButtons[index], [field]: value };
+      return newButtons;
+    });
+  };
+
+  const addSocialMediaButton = () => {
+    setSocialMediaButtons((prev) => [...prev, { label: '', link: '' }]);
+  };
+
+  const removeSocialMediaButton = (index) => {
+    if (socialMediaButtons.length > 1) {
+      setSocialMediaButtons((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      toast.error('At least one social media button is required.', {
+        duration: 1000,
+        className: 'toast-error',
+      });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const allEmpty =
-      Object.entries(formValues)
-        .filter(([key]) => key !== 'sections' && key !== 'backgroundImageFile' && key !== 'thankYouBackgroundImageFile')
-        .every(([_, value]) => value === '') &&
-      formValues.sections.every((section) =>
-        section.heading === '' &&
-        section.fields.every((field) =>
-          Object.values(field).every((value) => value === '' || value === false)
-        )
+      Object.values(formValues).every((value) => value === '' || value === null) &&
+      queries.every(
+        (query) => query.title.trim() === '' && query.category.trim() === '' && query.response.trim() === ''
       ) &&
-      !formValues.backgroundImageFile &&
-      !formValues.thankYouBackgroundImageFile;
+      socialMediaButtons.every((button) => button.label.trim() === '' && button.link.trim() === '');
     if (allEmpty) {
       toast.error('Please fill at least one field or select an image before submitting.', {
         duration: 1000,
@@ -170,11 +142,12 @@ const QuestionnaireFormForm = () => {
     setSubmitConfirmation(false);
     const dataToSubmit = {
       ...formValues,
-      backgroundImageFile: formValues.backgroundImageFile ? formValues.backgroundImageFile.name : null,
-      thankYouBackgroundImageFile: formValues.thankYouBackgroundImageFile ? formValues.thankYouBackgroundImageFile.name : null,
+      thankYouLogo: formValues.thankYouLogo ? formValues.thankYouLogo.name : null,
+      queries,
+      socialMediaButtons,
     };
-    console.log('Updated Client Questionnaire Form Data:', dataToSubmit);
-    toast.success('Client questionnaire form content has been saved successfully!', {
+    console.log('Updated Questionnaire Form Data:', dataToSubmit);
+    toast.success('Questionnaire form content has been saved successfully!', {
       duration: 2000,
       className: 'toast-success',
     });
@@ -186,6 +159,8 @@ const QuestionnaireFormForm = () => {
 
   const confirmReset = () => {
     setFormValues(initialFormValues);
+    setQueries(initialQueries);
+    setSocialMediaButtons(initialSocialMediaButtons);
     toast.success('Form has been reset.', {
       duration: 1500,
       className: 'toast-success',
@@ -198,165 +173,293 @@ const QuestionnaireFormForm = () => {
       <div>
         <div className="flex items-center gap-3 mb-8">
           <MdEdit className="text-yellow-400 w-6 h-6" />
-          <h2 className="heading">Customize Client Questionnaire Form</h2>
+          <h2 className="heading">Customize Questionnaire Form</h2>
         </div>
         <form
           onSubmit={handleSubmit}
           className="bg-zinc-900 text-white p-8 rounded-xl border border-yellow-400/20 shadow-lg shadow-black/50"
         >
           <div className="space-y-6">
-            {/* Form Section Content */}
+            {/* Tooltip */}
             <div>
-              <h3 className="feature-title mb-4">Form Section Content</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="label">Section Tooltip</label>
-                  <input
-                    type="text"
-                    value={formValues.sectionTooltip}
-                    onChange={(e) => handleChange('sectionTooltip', e.target.value)}
-                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the form section (e.g., Client Survey)"
-                  />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the form section.
-                  </p>
-                </div>
-                <div>
-                  <label className="label">Section Heading</label>
-                  <input
-                    type="text"
-                    value={formValues.sectionHeading}
-                    onChange={(e) => handleChange('sectionHeading', e.target.value)}
-                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the form section (e.g., Client Questionnaire)"
-                  />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The main title for the client questionnaire form.
-                  </p>
-                </div>
-                <div>
-                  <label className="label">Section Description</label>
-                  <textarea
-                    value={formValues.sectionDescription}
-                    onChange={(e) => handleChange('sectionDescription', e.target.value)}
-                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    rows={4}
-                    placeholder="Enter description for the form section (e.g., Please provide us with some information...)"
-                  />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A brief description of the form’s purpose.
-                  </p>
-                </div>
-              </div>
+              <label className="label">Tooltip</label>
+              <input
+                type="text"
+                value={formValues.tooltip}
+                onChange={(e) => handleChange('tooltip', e.target.value)}
+                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                placeholder="Enter tooltip for Questionnaire section"
+              />
+              <p className="text-gray-400 text-sm mt-2">
+                A brief tooltip for the Questionnaire section, displayed on hover.
+              </p>
             </div>
-            {/* Button Labels */}
+            {/* Heading */}
             <div>
-              <h3 className="feature-title mb-4">Button Labels</h3>
+              <label className="label">Heading</label>
+              <input
+                type="text"
+                value={formValues.heading}
+                onChange={(e) => handleChange('heading', e.target.value)}
+                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                placeholder="Enter heading for Questionnaire section (e.g., Customer Feedback)"
+              />
+              <p className="text-gray-400 text-sm mt-2">
+                The main heading for the Questionnaire section.
+              </p>
+            </div>
+            {/* Description */}
+            <div>
+              <label className="label">Description</label>
+              <textarea
+                value={formValues.description}
+                onChange={(e) => handleChange('description', e.target.value)}
+                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                rows={4}
+                placeholder="Enter description for Questionnaire section"
+              />
+              <p className="text-gray-400 text-sm mt-2">
+                A brief description of the Questionnaire section, displayed below the heading.
+              </p>
+            </div>
+            {/* Query Section */}
+            <div>
+              <h3 className="feature-title mb-4">Query Section</h3>
               <div className="space-y-4">
-                {[
-                  { field: 'nextButtonLabel', label: 'Next Button Label', placeholder: 'Enter label for Next button (e.g., Next)' },
-                  { field: 'previousButtonLabel', label: 'Previous Button Label', placeholder: 'Enter label for Previous button (e.g., Previous)' },
-                  { field: 'submitButtonLabel', label: 'Submit Button Label', placeholder: 'Enter label for Submit button (e.g., Submit Form)' },
-                ].map(({ field, label, placeholder }) => (
-                  <div key={field}>
-                    <label className="label">{label}</label>
-                    <input
-                      type="text"
-                      value={formValues[field]}
-                      onChange={(e) => handleChange(field, e.target.value)}
-                      className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                      placeholder={placeholder}
-                    />
-                    <p className="text-gray-400 text-sm mt-2">
-                      The label for the {label.toLowerCase()} in the form.
-                    </p>
+                <div>
+                  <label className="label">Query Section Heading</label>
+                  <input
+                    type="text"
+                    value={formValues.querySectionHeading}
+                    onChange={(e) => handleChange('querySectionHeading', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter heading for queries (e.g., Your Questions)"
+                  />
+                  <p className="text-gray-400 text-sm mt-2">
+                    The heading for the queries list, displayed above the query items.
+                  </p>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="label">Query Items</label>
+                  <button
+                    type="button"
+                    onClick={addQuery}
+                    className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
+                  >
+                    <MdAddCircle className="w-5 h-5" />
+                    <span>Add Query</span>
+                  </button>
+                </div>
+                {queries.map((query, index) => (
+                  <div key={index} className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="feature-title">Query {index + 1}</h4>
+                      {queries.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeQuery(index)}
+                          className="text-red-400 hover:text-red-300 transition-colors duration-200"
+                        >
+                          <MdRemoveCircle className="w-5 h-5" />
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="label">Query {index + 1} Title</label>
+                        <input
+                          type="text"
+                          value={query.title}
+                          onChange={(e) => handleQueryChange(index, 'title', e.target.value)}
+                          className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                          placeholder={`Enter title for Query ${index + 1} (e.g., What is your preferred contact method?)`}
+                        />
+                        <p className="text-gray-400 text-sm mt-2">
+                          The question or title of the query.
+                        </p>
+                      </div>
+                      <div>
+                        <label className="label">Query {index + 1} Category</label>
+                        <select
+                          value={query.category}
+                          onChange={(e) => handleQueryChange(index, 'category', e.target.value)}
+                          className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                        >
+                          <option value="" disabled>
+                            Select a category
+                          </option>
+                          {queryCategories.map((category) => (
+                            <option key={category} value={category}>
+                              {category}
+                            </option>
+                          ))}
+                        </select>
+                        <p className="text-gray-400 text-sm mt-2">
+                          The category of the query (e.g., General, Technical).
+                        </p>
+                      </div>
+                      <div>
+                        <label className="label">Query {index + 1} Response</label>
+                        <textarea
+                          value={query.response}
+                          onChange={(e) => handleQueryChange(index, 'response', e.target.value)}
+                          className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                          rows={4}
+                          placeholder={`Enter response for Query ${index + 1}`}
+                        />
+                        <p className="text-gray-400 text-sm mt-2">
+                          The detailed response or answer to the query (optional for form input).
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Thank You Page Content */}
+            {/* Thank You Page */}
             <div>
-              <h3 className="feature-title mb-4">Thank You Page Content</h3>
+              <h3 className="feature-title mb-4">Thank You Page</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="label">Thank You Tooltip</label>
+                  <label className="label">Thank You Page Logo</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoChange}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                  />
+                  {formValues.thankYouLogo && (
+                    <p className="text-gray-400 text-sm mt-2">
+                      Selected file: {formValues.thankYouLogo.name}
+                    </p>
+                  )}
+                  <p className="text-gray-400 text-sm mt-2">
+                    Upload a logo for the Thank You page.
+                  </p>
+                </div>
+                <div>
+                  <label className="label">Thank You Page Tooltip</label>
                   <input
                     type="text"
                     value={formValues.thankYouTooltip}
                     onChange={(e) => handleChange('thankYouTooltip', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the thank you page (e.g., Thank You!)"
+                    placeholder="Enter tooltip for Thank You page"
                   />
                   <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the thank you page.
+                    A brief tooltip for the Thank You page, displayed on hover.
                   </p>
                 </div>
                 <div>
-                  <label className="label">Thank You Heading</label>
+                  <label className="label">Thank You Page Heading</label>
                   <input
                     type="text"
                     value={formValues.thankYouHeading}
                     onChange={(e) => handleChange('thankYouHeading', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the thank you page (e.g., Submission Successful)"
+                    placeholder="Enter heading for Thank You page (e.g., Thank You for Your Submission!)"
                   />
                   <p className="text-gray-400 text-sm mt-2">
-                    The main title for the thank you page.
+                    The main heading for the Thank You page.
                   </p>
                 </div>
                 <div>
-                  <label className="label">Thank You Description</label>
+                  <label className="label">Thank You Page Description</label>
                   <textarea
                     value={formValues.thankYouDescription}
                     onChange={(e) => handleChange('thankYouDescription', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
-                    placeholder="Enter description for the thank you page (e.g., Thank you for completing the client questionnaire...)"
+                    placeholder="Enter description for Thank You page"
                   />
                   <p className="text-gray-400 text-sm mt-2">
-                    A brief message displayed on the thank you page.
+                    A brief description for the Thank You page, displayed below the heading.
                   </p>
                 </div>
                 <div>
-                  <label className="label">Thank You Back to Home Button Label</label>
+                  <label className="label">Thank You Page Button 1</label>
                   <input
                     type="text"
-                    value={formValues.thankYouBackToHomeLabel}
-                    onChange={(e) => handleChange('thankYouBackToHomeLabel', e.target.value)}
+                    value={formValues.thankYouButton1Label}
+                    onChange={(e) => handleChange('thankYouButton1Label', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter label for Back to Home button (e.g., Back to Home)"
+                    placeholder="Enter label for Button 1 (e.g., Return to Home)"
+                  />
+                  <input
+                    type="text"
+                    value={formValues.thankYouButton1Link}
+                    onChange={(e) => handleChange('thankYouButton1Link', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200 mt-2"
+                    placeholder="Enter link for Button 1 (e.g., /home)"
                   />
                   <p className="text-gray-400 text-sm mt-2">
-                    The label for the Back to Home button on the thank you page.
+                    The label and link for the first button on the Thank You page.
+                  </p>
+                </div>
+                <div>
+                  <label className="label">Thank You Page Button 2</label>
+                  <input
+                    type="text"
+                    value={formValues.thankYouButton2Label}
+                    onChange={(e) => handleChange('thankYouButton2Label', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter label for Button 2 (e.g., Explore More)"
+                  />
+                  <input
+                    type="text"
+                    value={formValues.thankYouButton2Link}
+                    onChange={(e) => handleChange('thankYouButton2Link', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200 mt-2"
+                    placeholder="Enter link for Button 2 (e.g., /explore)"
+                  />
+                  <p className="text-gray-400 text-sm mt-2">
+                    The label and link for the second button on the Thank You page.
+                  </p>
+                </div>
+                <div>
+                  <label className="label">Thank You Page Button 3</label>
+                  <input
+                    type="text"
+                    value={formValues.thankYouButton3Label}
+                    onChange={(e) => handleChange('thankYouButton3Label', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter label for Button 3 (e.g., Contact Us)"
+                  />
+                  <input
+                    type="text"
+                    value={formValues.thankYouButton3Link}
+                    onChange={(e) => handleChange('thankYouButton3Link', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200 mt-2"
+                    placeholder="Enter link for Button 3 (e.g., /contact)"
+                  />
+                  <p className="text-gray-400 text-sm mt-2">
+                    The label and link for the third button on the Thank You page.
                   </p>
                 </div>
               </div>
             </div>
-            {/* Dynamic Sections */}
+            {/* Social Media Buttons for Small Devices */}
             <div>
+              <h3 className="feature-title mb-4">Social Media Buttons (Small Devices)</h3>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="feature-title">Form Sections</h3>
+                <label className="label">Social Media Buttons</label>
                 <button
                   type="button"
-                  onClick={addSection}
+                  onClick={addSocialMediaButton}
                   className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
                 >
                   <MdAddCircle className="w-5 h-5" />
-                  <span>Add New Section</span>
+                  <span>Add Button</span>
                 </button>
               </div>
-              {formValues.sections.map((section, sectionIndex) => (
-                <div
-                  key={sectionIndex}
-                  className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700"
-                >
+              {socialMediaButtons.map((button, index) => (
+                <div key={index} className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="feature-title">Section {sectionIndex + 1}</h4>
-                    {formValues.sections.length > 1 && (
+                    <h4 className="feature-title">Social Media Button {index + 1}</h4>
+                    {socialMediaButtons.length > 1 && (
                       <button
                         type="button"
-                        onClick={() => removeSection(sectionIndex)}
+                        onClick={() => removeSocialMediaButton(index)}
                         className="text-red-400 hover:text-red-300 transition-colors duration-200"
                       >
                         <MdRemoveCircle className="w-5 h-5" />
@@ -365,174 +468,31 @@ const QuestionnaireFormForm = () => {
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <label className="label">Section Heading</label>
+                      <label className="label">Button {index + 1} Label</label>
                       <input
                         type="text"
-                        value={section.heading}
-                        onChange={(e) => handleSectionChange(sectionIndex, 'heading', e.target.value)}
+                        value={button.label}
+                        onChange={(e) => handleSocialMediaButtonChange(index, 'label', e.target.value)}
                         className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
-                        placeholder={`Enter heading for Section ${sectionIndex + 1} (e.g., Personal Information)`}
+                        placeholder={`Enter label for Social Media Button ${index + 1} (e.g., Twitter)`}
                       />
-                      <p className="text-gray-400 text-sm mt-2">
-                        The heading for the section (e.g., Personal Information, Business Details).
-                      </p>
                     </div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="label">Fields</label>
-                      <button
-                        type="button"
-                        onClick={() => addField(sectionIndex)}
-                        className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
-                      >
-                        <MdAddCircle className="w-5 h-5" />
-                        <span>Add Field</span>
-                      </button>
+                    <div>
+                      <label className="label">Button {index + 1} Link</label>
+                      <input
+                        type="text"
+                        value={button.link}
+                        onChange={(e) => handleSocialMediaButtonChange(index, 'link', e.target.value)}
+                        className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
+                        placeholder={`Enter link for Social Media Button ${index + 1} (e.g., https://twitter.com)`}
+                      />
                     </div>
-                    {section.fields.map((field, fieldIndex) => (
-                      <div
-                        key={fieldIndex}
-                        className="ml-4 p-4 bg-zinc-900 rounded-lg border border-gray-600"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <h5 className="text-sm font-semibold text-gray-200">
-                            Field {fieldIndex + 1}
-                          </h5>
-                          {section.fields.length > 1 && (
-                            <button
-                              type="button"
-                              onClick={() => removeField(sectionIndex, fieldIndex)}
-                              className="text-red-400 hover:text-red-300 transition-colors duration-200"
-                            >
-                              <MdRemoveCircle className="w-5 h-5" />
-                            </button>
-                          )}
-                        </div>
-                        <div className="space-y-4">
-                          <div>
-                            <label className="label">Field Name</label>
-                            <input
-                              type="text"
-                              value={field.name}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'name', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter name for Field ${fieldIndex + 1} (e.g., firstName)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              A unique identifier for the field (e.g., firstName, email).
-                            </p>
-                          </div>
-                          <div>
-                            <label className="label">Field Type</label>
-                            <select
-                              value={field.type}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'type', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                            >
-                              <option value="text">Text</option>
-                              <option value="email">Email</option>
-                              <option value="phone">Phone</option>
-                              <option value="select">Select</option>
-                              <option value="checkbox">Checkbox</option>
-                              <option value="textarea">Textarea</option>
-                            </select>
-                            <p className="text-gray-400 text-sm mt-2">
-                              The type of input field (e.g., text, select, checkbox).
-                            </p>
-                          </div>
-                          <div>
-                            <label className="label">Field Label</label>
-                            <input
-                              type="text"
-                              value={field.label}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'label', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter label for Field ${fieldIndex + 1} (e.g., First Name)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              The label displayed for the field.
-                            </p>
-                          </div>
-                          {(field.type === 'select' || field.type === 'checkbox') && (
-                            <div>
-                              <label className="label">Options (Comma-Separated)</label>
-                              <input
-                                type="text"
-                                value={field.options}
-                                onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'options', e.target.value)}
-                                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                                placeholder="Enter options (e.g., Option1,Option2,Option3)"
-                              />
-                              <p className="text-gray-400 text-sm mt-2">
-                                Comma-separated list of options for select or checkbox fields.
-                              </p>
-                            </div>
-                          )}
-                          <div>
-                            <label className="label">Placeholder</label>
-                            <input
-                              type="text"
-                              value={field.placeholder}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'placeholder', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter placeholder for Field ${fieldIndex + 1} (e.g., Your first name)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              The placeholder text displayed in the field.
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              checked={field.required}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'required', e.target.checked)}
-                              className="w-5 h-5 rounded border border-gray-600 bg-zinc-800 checked:bg-amber-400 checked:border-amber-400 transition-all"
-                            />
-                            <label className="text-sm text-gray-200">Required</label>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
+                  <p className="text-gray-400 text-sm mt-2">
+                    The label and link for a social media button, optimized for small devices.
+                  </p>
                 </div>
               ))}
-            </div>
-            {/* Media Uploads */}
-            <div>
-              <h3 className="feature-title mb-4">Media Uploads</h3>
-              <div className="space-y-4">
-                {[
-                  { field: 'backgroundImageFile', label: 'Form Background Image', placeholder: 'Click or drag to upload a background image for the form' },
-                  { field: 'thankYouBackgroundImageFile', label: 'Thank You Background Image', placeholder: 'Click or drag to upload a background image for the thank you page' },
-                ].map(({ field, label, placeholder }) => (
-                  <div key={field}>
-                    <label className="label">{label}</label>
-                    <div className="upload-box">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileChange(field, e)}
-                        className="hidden"
-                        id={field}
-                      />
-                      <label
-                        htmlFor={field}
-                        className="w-full h-40 bg-zinc-900 rounded-lg flex items-center justify-center flex-col cursor-pointer border-2 border-dashed border-gray-600 hover:border-yellow-400 transition-all duration-200"
-                      >
-                        <span className="text-yellow-400 text-3xl">+</span>
-                        <p className="text-gray-400 text-sm mt-2">{placeholder}</p>
-                      </label>
-                      {formValues[field] && (
-                        <p className="text-gray-300 text-sm mt-2">
-                          Selected: {formValues[field].name}
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Select one image file for {label.toLowerCase()}. Only image files are allowed.
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
           <ButtonGroup onResetClick={handleReset} />
@@ -590,4 +550,4 @@ const QuestionnaireFormForm = () => {
   );
 };
 
-export default QuestionnaireFormForm;
+export default QuestionnaireForm;
