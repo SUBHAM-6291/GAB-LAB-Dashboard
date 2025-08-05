@@ -72,7 +72,7 @@ const menuItems = [
     subItems: [
       { title: 'About Us', path: '/dashboard/Our-Story/About-us', icon: <MdInfo className="w-4 h-4" /> },
       { title: 'Discover', path: '/dashboard/Our-Story/Discover', icon: <MdExplore className="w-4 h-4" /> },
-      { title: 'Discover Our Feature', path: '/dashboard/Our-Story/Discover-our-feature', icon: <MdStar className="w-4 h-4" /> },
+      { title: 'Discover Our Feature', path: '/dashboard/Our-Story/discover-our-feuture', icon: <MdStar className="w-4 h-4" /> },
       { title: 'Our Team', path: '/dashboard/Our-Story/Our-Team', icon: <MdSpaceDashboard className="w-4 h-4" /> },
       { title: 'Process', path: '/dashboard/Our-Story/Process', icon: <MdSettingsApplications className="w-4 h-4" /> },
       { title: 'TripAdvisor', path: '/dashboard/Our-Story/TripAdvisor', icon: <MdFeedback className="w-4 h-4" /> },

@@ -96,20 +96,20 @@ const Tailored = () => {
     });
   };
 
-  const handleReset = () => {
+ const handleReset = () => {
+  setResetConfirmation(true);
+};
 
-    setResetConfirmation(true);
+const confirmReset = () => {
+  setFormValues(initialFormValues);
+  setFeatures(initialFeatures);
+  toast.success('Form has been reset.', {
+    duration: 1500,
+    className: 'toast-success',
+  });
+  setResetConfirmation(false);
+};
 
-
-  const confirmReset = () => {
-    setFormValues(initialFormValues);
-    setFeatures(initialFeatures);
-    toast.success('Form has been reset.', {
-      duration: 1500,
-      className: 'toast-success',
-    });
-    setResetConfirmation(false);
-  };
 
   return (
     <div className="main-container">
