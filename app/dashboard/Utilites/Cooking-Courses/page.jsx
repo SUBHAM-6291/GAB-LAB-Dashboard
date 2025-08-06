@@ -1,10 +1,10 @@
 import React from 'react'
-import cooking from '@/app/_components/Utilites/Cooking-Courses/cooking'
+import CookingCourses from '@/app/_components/Utilites/Cooking-Courses/CookingCourses'
 
 const page = () => {
   return (
     <div>
-      <cooking/>
+      <CookingCourses/>
     </div>
   )
 }

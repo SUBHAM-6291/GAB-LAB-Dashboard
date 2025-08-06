@@ -1,10 +1,10 @@
 import React from 'react'
-import courses from '@/app/_components/ourClasses/courses/courses'
+import OurClassesCourses from '@/app/_components/ourClasses/OurClassesCourses/OurClassesCourses'
 
 const page = () => {
   return (
     <div>
-      <courses/>
+      <OurClassesCourses/>
     </div>
   )
 }
