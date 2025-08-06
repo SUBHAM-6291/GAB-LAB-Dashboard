@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import "@/components/ui/professional-ui.css";
-import ButtonGroup from '../Utilites/Btn'; // Adjust the import path as needed
+import ButtonGroup from '../Utilites/Btn';
 
 const FaqForm = () => {
   const initialFormValues = {
@@ -22,9 +22,9 @@ const FaqForm = () => {
   };
 
   const initialFaqs = [
-    { title: '', content: '', highlight: '' },
-    { title: '', content: '', highlight: '' },
-    { title: '', content: '', highlight: '' },
+    { title: '', content: '' },
+    { title: '', content: '' },
+    { title: '', content: '' },
   ];
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -48,7 +48,7 @@ const FaqForm = () => {
   };
 
   const addFaq = () => {
-    setFaqs((prev) => [...prev, { title: '', content: '', highlight: '' }]);
+    setFaqs((prev) => [...prev, { title: '', content: '' }]);
   };
 
   const removeFaq = (index) => {
@@ -66,7 +66,7 @@ const FaqForm = () => {
     e.preventDefault();
     const allEmpty =
       Object.values(formValues).every((value) => value.trim() === '') &&
-      faqs.every((faq) => faq.title.trim() === '' && faq.content.trim() === '' && faq.highlight.trim() === '');
+      faqs.every((faq) => faq.title.trim() === '' && faq.content.trim() === '');
     if (allEmpty) {
       toast.error('Please fill at least one field before submitting.', {
         duration: 1000,
@@ -192,16 +192,6 @@ const FaqForm = () => {
                         className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
                         rows={3}
                         placeholder={`Enter content for FAQ ${index + 1}`}
-                      />
-                    </div>
-                    <div>
-                      <label className="label">FAQ {index + 1} Highlight</label>
-                      <input
-                        type="text"
-                        value={faq.highlight}
-                        onChange={(e) => handleFaqChange(index, 'highlight', e.target.value)}
-                        className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
-                        placeholder={`Enter highlight for FAQ ${index + 1}`}
                       />
                     </div>
                   </div>

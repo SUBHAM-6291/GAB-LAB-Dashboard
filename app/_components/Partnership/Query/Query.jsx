@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MdEdit, MdAddCircle, MdRemoveCircle } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -12,124 +12,96 @@ import {
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import '@/components/ui/professional-ui.css';
-import ButtonGroup from '@/app/_components/Utilites/Btn'; // Adjust the import path as needed
+import ButtonGroup from '../../Utilites/Btn';
 
-const QuestionnaireFormForm = () => {
-  const initialSection = {
-    heading: '',
-    fields: [
-      { name: '', type: 'text', label: '', options: '', placeholder: '', required: false },
-    ],
-  };
-
+const QuestionnaireFormEdit = () => {
   const initialFormValues = {
-    sectionTooltip: '',
-    sectionHeading: '',
-    sectionDescription: '',
-    nextButtonLabel: '',
-    previousButtonLabel: '',
-    submitButtonLabel: '',
-    thankYouTooltip: '',
-    thankYouHeading: '',
-    thankYouDescription: '',
-    thankYouBackToHomeLabel: '',
-    backgroundImageFile: null,
-    thankYouBackgroundImageFile: null,
-    sections: [
-      { ...initialSection, heading: '' },
-      { ...initialSection, heading: '' },
-    ],
+    formContent: {
+      tooltip: '',
+      heading: '',
+      description: '',
+      cardHeadings: {
+        personalInfo: '',
+        businessDetails: '',
+      },
+    },
+    thankYouContent: {
+      tooltip: '',
+      heading: '',
+      description: '',
+      bannerImage: null,
+    },
+    buttonLabels: {
+      singleColumn: {
+        next: '',
+        previous: '',
+        submit: '',
+      },
+      twoColumn: {
+        submit: '',
+      },
+      thankYou: {
+        backToHome: '',
+      },
+    },
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
   const [submitConfirmation, setSubmitConfirmation] = useState(false);
   const [resetConfirmation, setResetConfirmation] = useState(false);
 
-  const handleChange = (field, value) => {
+  // Handle text input changes for form and thank you content
+  const handleChange = (section, field, value) => {
     setFormValues((prev) => ({
       ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleSectionChange = (sectionIndex, field, value) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex] = { ...newSections[sectionIndex], [field]: value };
-      return { ...prev, sections: newSections };
-    });
-  };
-
-  const handleFieldChange = (sectionIndex, fieldIndex, field, value) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex].fields[fieldIndex] = {
-        ...newSections[sectionIndex].fields[fieldIndex],
+      [section]: {
+        ...prev[section],
         [field]: value,
-      };
-      return { ...prev, sections: newSections };
-    });
-  };
-
-  const addSection = () => {
-    setFormValues((prev) => ({
-      ...prev,
-      sections: [...prev.sections, { ...initialSection, heading: '' }],
+      },
     }));
   };
 
-  const removeSection = (sectionIndex) => {
-    if (formValues.sections.length > 1) {
-      setFormValues((prev) => ({
-        ...prev,
-        sections: prev.sections.filter((_, i) => i !== sectionIndex),
-      }));
-    } else {
-      toast.error('At least one section is required.', {
-        duration: 1000,
-        className: 'toast-error',
-      });
-    }
+  // Handle card heading changes
+  const handleCardHeadingChange = (field, value) => {
+    setFormValues((prev) => ({
+      ...prev,
+      formContent: {
+        ...prev.formContent,
+        cardHeadings: {
+          ...prev.formContent.cardHeadings,
+          [field]: value,
+        },
+      },
+    }));
   };
 
-  const addField = (sectionIndex) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      newSections[sectionIndex].fields.push({
-        name: '',
-        type: 'text',
-        label: '',
-        options: '',
-        placeholder: '',
-        required: false,
-      });
-      return { ...prev, sections: newSections };
-    });
+  // Handle button label changes
+  const handleButtonLabelChange = (layout, button, value) => {
+    setFormValues((prev) => ({
+      ...prev,
+      buttonLabels: {
+        ...prev.buttonLabels,
+        [layout]: {
+          ...prev.buttonLabels[layout],
+          [button]: value,
+        },
+      },
+    }));
   };
 
-  const removeField = (sectionIndex, fieldIndex) => {
-    setFormValues((prev) => {
-      const newSections = [...prev.sections];
-      if (newSections[sectionIndex].fields.length > 1) {
-        newSections[sectionIndex].fields = newSections[sectionIndex].fields.filter(
-          (_, i) => i !== fieldIndex
-        );
-        return { ...prev, sections: newSections };
-      } else {
-        toast.error('At least one field is required per section.', {
+  // Handle banner image file change
+  const handleFileChange = (section, e) => {
+    const file = e.target.files[0] || e.dataTransfer?.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select a valid image file.', {
           duration: 1000,
           className: 'toast-error',
         });
-        return prev;
+        return;
       }
-    });
-  };
-
-  const handleFileChange = (field, e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        toast.error(`Please select an image file for ${field.replace(/([A-Z])/g, ' $1').trim()}.`, {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('File size exceeds 5MB limit.', {
           duration: 1000,
           className: 'toast-error',
         });
@@ -137,25 +109,61 @@ const QuestionnaireFormForm = () => {
       }
       setFormValues((prev) => ({
         ...prev,
-        [field]: file,
+        [section]: {
+          ...prev[section],
+          bannerImage: file,
+        },
       }));
     }
   };
 
+  // Clear banner image
+  const clearFile = (section) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        bannerImage: null,
+      },
+    }));
+  };
+
+  // Handle drag-and-drop events
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('border-yellow-400');
+  };
+
+  const handleDragLeave = (e) => {
+    e.currentTarget.classList.remove('border-yellow-400');
+  };
+
+  const handleDrop = (section, e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-yellow-400');
+    handleFileChange(section, e);
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const allEmpty =
-      Object.entries(formValues)
-        .filter(([key]) => key !== 'sections' && key !== 'backgroundImageFile' && key !== 'thankYouBackgroundImageFile')
-        .every(([_, value]) => value === '') &&
-      formValues.sections.every((section) =>
-        section.heading === '' &&
-        section.fields.every((field) =>
-          Object.values(field).every((value) => value === '' || value === false)
-        )
-      ) &&
-      !formValues.backgroundImageFile &&
-      !formValues.thankYouBackgroundImageFile;
+      Object.values(formValues.formContent).every((value) => {
+        if (typeof value === 'string') return value.trim() === '';
+        if (value === formValues.formContent.cardHeadings) {
+          return Object.values(formValues.formContent.cardHeadings).every((v) => v.trim() === '');
+        }
+        return true;
+      }) &&
+      Object.values(formValues.thankYouContent).every((value) => {
+        if (typeof value === 'string') return value.trim() === '';
+        if (value === formValues.thankYouContent.bannerImage) return value === null;
+        return true;
+      }) &&
+      Object.values(formValues.buttonLabels).every((layout) =>
+        Object.values(layout).every((v) => v.trim() === '')
+      );
+
     if (allEmpty) {
       toast.error('Please fill at least one field or select an image before submitting.', {
         duration: 1000,
@@ -166,24 +174,54 @@ const QuestionnaireFormForm = () => {
     }
   };
 
+  // Confirm form submission
   const confirmSave = async () => {
     setSubmitConfirmation(false);
     const dataToSubmit = {
-      ...formValues,
-      backgroundImageFile: formValues.backgroundImageFile ? formValues.backgroundImageFile.name : null,
-      thankYouBackgroundImageFile: formValues.thankYouBackgroundImageFile ? formValues.thankYouBackgroundImageFile.name : null,
+      formContent: {
+        tooltip: formValues.formContent.tooltip,
+        heading: formValues.formContent.heading,
+        description: formValues.formContent.description,
+        cardHeadings: {
+          personalInfo: formValues.formContent.cardHeadings.personalInfo,
+          businessDetails: formValues.formContent.cardHeadings.businessDetails,
+        },
+      },
+      thankYouContent: {
+        tooltip: formValues.thankYouContent.tooltip,
+        heading: formValues.thankYouContent.heading,
+        description: formValues.thankYouContent.description,
+        bannerImage: formValues.thankYouContent.bannerImage
+          ? formValues.thankYouContent.bannerImage.name
+          : null,
+      },
+      buttonLabels: {
+        singleColumn: {
+          next: formValues.buttonLabels.singleColumn.next,
+          previous: formValues.buttonLabels.singleColumn.previous,
+          submit: formValues.buttonLabels.singleColumn.submit,
+        },
+        twoColumn: {
+          submit: formValues.buttonLabels.twoColumn.submit,
+        },
+        thankYou: {
+          backToHome: formValues.buttonLabels.thankYou.backToHome,
+        },
+      },
     };
-    console.log('Updated Client Questionnaire Form Data:', dataToSubmit);
-    toast.success('Client questionnaire form content has been saved successfully!', {
+    console.log('Updated Questionnaire Form Content:', JSON.stringify(dataToSubmit, null, 2));
+    toast.success('Questionnaire form content has been saved successfully!', {
       duration: 2000,
       className: 'toast-success',
     });
   };
 
+  // Handle form reset
   const handleReset = () => {
     setResetConfirmation(true);
   };
 
+  // Confirm form reset
   const confirmReset = () => {
     setFormValues(initialFormValues);
     toast.success('Form has been reset.', {
@@ -198,7 +236,7 @@ const QuestionnaireFormForm = () => {
       <div>
         <div className="flex items-center gap-3 mb-8">
           <MdEdit className="text-yellow-400 w-6 h-6" />
-          <h2 className="heading">Customize Client Questionnaire Form</h2>
+          <h2 className="heading">Edit Questionnaire Form Content</h2>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -207,336 +245,233 @@ const QuestionnaireFormForm = () => {
           <div className="space-y-6">
             {/* Form Section Content */}
             <div>
-              <h3 className="feature-title mb-4">Form Section Content</h3>
-              <div className="space-y-4">
+              <h3 className="sub-heading">Form Section Content</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="label">Section Tooltip</label>
+                  <label className="label">Tooltip</label>
                   <input
                     type="text"
-                    value={formValues.sectionTooltip}
-                    onChange={(e) => handleChange('sectionTooltip', e.target.value)}
+                    value={formValues.formContent.tooltip}
+                    onChange={(e) => handleChange('formContent', 'tooltip', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the form section (e.g., Client Survey)"
+                    placeholder="Enter tooltip (e.g., Client Survey)"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the form section.
-                  </p>
                 </div>
                 <div>
-                  <label className="label">Section Heading</label>
+                  <label className="label">Heading</label>
                   <input
                     type="text"
-                    value={formValues.sectionHeading}
-                    onChange={(e) => handleChange('sectionHeading', e.target.value)}
+                    value={formValues.formContent.heading}
+                    onChange={(e) => handleChange('formContent', 'heading', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the form section (e.g., Client Questionnaire)"
+                    placeholder="Enter heading (e.g., Client Questionnaire)"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The main title for the client questionnaire form.
-                  </p>
                 </div>
-                <div>
-                  <label className="label">Section Description</label>
+                <div className="md:col-span-2">
+                  <label className="label">Description</label>
                   <textarea
-                    value={formValues.sectionDescription}
-                    onChange={(e) => handleChange('sectionDescription', e.target.value)}
+                    value={formValues.formContent.description}
+                    onChange={(e) => handleChange('formContent', 'description', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
-                    placeholder="Enter description for the form section (e.g., Please provide us with some information...)"
+                    placeholder="Enter description for the questionnaire"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A brief description of the form’s purpose.
-                  </p>
                 </div>
               </div>
             </div>
-            {/* Button Labels */}
+
+            {/* Form Card Headings */}
             <div>
-              <h3 className="feature-title mb-4">Button Labels</h3>
-              <div className="space-y-4">
-                {[
-                  { field: 'nextButtonLabel', label: 'Next Button Label', placeholder: 'Enter label for Next button (e.g., Next)' },
-                  { field: 'previousButtonLabel', label: 'Previous Button Label', placeholder: 'Enter label for Previous button (e.g., Previous)' },
-                  { field: 'submitButtonLabel', label: 'Submit Button Label', placeholder: 'Enter label for Submit button (e.g., Submit Form)' },
-                ].map(({ field, label, placeholder }) => (
-                  <div key={field}>
-                    <label className="label">{label}</label>
-                    <input
-                      type="text"
-                      value={formValues[field]}
-                      onChange={(e) => handleChange(field, e.target.value)}
-                      className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                      placeholder={placeholder}
-                    />
-                    <p className="text-gray-400 text-sm mt-2">
-                      The label for the {label.toLowerCase()} in the form.
-                    </p>
-                  </div>
-                ))}
+              <h3 className="sub-heading">Form Card Headings</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="label">Personal Information (Page 1)</label>
+                  <input
+                    type="text"
+                    value={formValues.formContent.cardHeadings.personalInfo}
+                    onChange={(e) => handleCardHeadingChange('personalInfo', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter heading (e.g., Personal Information)"
+                  />
+                </div>
+                <div>
+                  <label className="label">Business Details (Page 2)</label>
+                  <input
+                    type="text"
+                    value={formValues.formContent.cardHeadings.businessDetails}
+                    onChange={(e) => handleCardHeadingChange('businessDetails', e.target.value)}
+                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                    placeholder="Enter heading (e.g., Business Details)"
+                  />
+                </div>
               </div>
             </div>
+
             {/* Thank You Page Content */}
             <div>
-              <h3 className="feature-title mb-4">Thank You Page Content</h3>
-              <div className="space-y-4">
+              <h3 className="sub-heading">Thank You Page Content</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="label">Thank You Tooltip</label>
+                  <label className="label">Tooltip</label>
                   <input
                     type="text"
-                    value={formValues.thankYouTooltip}
-                    onChange={(e) => handleChange('thankYouTooltip', e.target.value)}
+                    value={formValues.thankYouContent.tooltip}
+                    onChange={(e) => handleChange('thankYouContent', 'tooltip', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the thank you page (e.g., Thank You!)"
+                    placeholder="Enter tooltip (e.g., Thank You!)"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the thank you page.
-                  </p>
                 </div>
                 <div>
-                  <label className="label">Thank You Heading</label>
+                  <label className="label">Heading</label>
                   <input
                     type="text"
-                    value={formValues.thankYouHeading}
-                    onChange={(e) => handleChange('thankYouHeading', e.target.value)}
+                    value={formValues.thankYouContent.heading}
+                    onChange={(e) => handleChange('thankYouContent', 'heading', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the thank you page (e.g., Submission Successful)"
+                    placeholder="Enter heading (e.g., Submission Successful)"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The main title for the thank you page.
-                  </p>
                 </div>
-                <div>
-                  <label className="label">Thank You Description</label>
+                <div className="md:col-span-2">
+                  <label className="label">Description</label>
                   <textarea
-                    value={formValues.thankYouDescription}
-                    onChange={(e) => handleChange('thankYouDescription', e.target.value)}
+                    value={formValues.thankYouContent.description}
+                    onChange={(e) => handleChange('thankYouContent', 'description', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
-                    placeholder="Enter description for the thank you page (e.g., Thank you for completing the client questionnaire...)"
+                    placeholder="Enter description for the thank you page"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A brief message displayed on the thank you page.
-                  </p>
-                </div>
-                <div>
-                  <label className="label">Thank You Back to Home Button Label</label>
-                  <input
-                    type="text"
-                    value={formValues.thankYouBackToHomeLabel}
-                    onChange={(e) => handleChange('thankYouBackToHomeLabel', e.target.value)}
-                    className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter label for Back to Home button (e.g., Back to Home)"
-                  />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The label for the Back to Home button on the thank you page.
-                  </p>
                 </div>
               </div>
             </div>
-            {/* Dynamic Sections */}
+
+            {/* Thank You Page Banner Image */}
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="feature-title">Form Sections</h3>
-                <button
-                  type="button"
-                  onClick={addSection}
-                  className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
-                >
-                  <MdAddCircle className="w-5 h-5" />
-                  <span>Add New Section</span>
-                </button>
-              </div>
-              {formValues.sections.map((section, sectionIndex) => (
-                <div
-                  key={sectionIndex}
-                  className="mb-4 p-4 bg-zinc-800 rounded-lg border border-gray-700"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="feature-title">Section {sectionIndex + 1}</h4>
-                    {formValues.sections.length > 1 && (
+              <h3 className="sub-heading">Thank You Page Banner Image</h3>
+              <div className="p-3 bg-zinc-800 rounded-xl border border-gray-700/50 shadow-sm shadow-black/30">
+                <div className="upload-box">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange('thankYouContent', e)}
+                    className="hidden"
+                    id="thankYouBannerImageUpload"
+                  />
+                  <label
+                    htmlFor="thankYouBannerImageUpload"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop('thankYouContent', e)}
+                    className="w-full h-40 bg-zinc-900 rounded-lg flex items-center justify-center flex-col cursor-pointer border-2 border-dashed border-gray-600 hover:border-yellow-400 transition-all duration-200"
+                  >
+                    {formValues.thankYouContent.bannerImage ? (
+                      <img
+                        src={URL.createObjectURL(formValues.thankYouContent.bannerImage)}
+                        alt="Preview"
+                        className="w-16 h-16 object-cover rounded-lg"
+                      />
+                    ) : (
+                      <>
+                        <span className="text-yellow-400 text-3xl">+</span>
+                        <p className="text-gray-400 text-sm mt-2">Click or drag to upload an image</p>
+                        <p className="text-gray-500 text-xs mt-1">Accepted: PNG, JPG, max 5MB</p>
+                      </>
+                    )}
+                  </label>
+                  {formValues.thankYouContent.bannerImage && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <p className="text-gray-300 text-sm truncate">
+                        Selected: {formValues.thankYouContent.bannerImage.name}
+                      </p>
                       <button
                         type="button"
-                        onClick={() => removeSection(sectionIndex)}
-                        className="text-red-400 hover:text-red-300 transition-colors duration-200"
+                        onClick={() => clearFile('thankYouContent')}
+                        className="text-red-400 hover:text-red-300"
                       >
-                        <MdRemoveCircle className="w-5 h-5" />
+                        Clear
                       </button>
-                    )}
-                  </div>
-                  <div className="space-y-4">
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Button Labels */}
+            <div>
+              <h3 className="sub-heading">Button Labels</h3>
+              <div className="space-y-6">
+                {/* Single Column Layout (<1024px) */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-200 mb-3">Single Column Layout (1024px) devices</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label className="label">Section Heading</label>
+                      <label className="label">Next Button (Page 1)</label>
                       <input
                         type="text"
-                        value={section.heading}
-                        onChange={(e) => handleSectionChange(sectionIndex, 'heading', e.target.value)}
-                        className="w-full bg-zinc-900 rounded-lg p-3 text-white transition-all duration-200"
-                        placeholder={`Enter heading for Section ${sectionIndex + 1} (e.g., Personal Information)`}
+                        value={formValues.buttonLabels.singleColumn.next}
+                        onChange={(e) => handleButtonLabelChange('singleColumn', 'next', e.target.value)}
+                        className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                        placeholder="Enter label (e.g., Next)"
                       />
-                      <p className="text-gray-400 text-sm mt-2">
-                        The heading for the section (e.g., Personal Information, Business Details).
-                      </p>
                     </div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="label">Fields</label>
-                      <button
-                        type="button"
-                        onClick={() => addField(sectionIndex)}
-                        className="flex items-center gap-1 text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
-                      >
-                        <MdAddCircle className="w-5 h-5" />
-                        <span>Add Field</span>
-                      </button>
+                    <div>
+                      <label className="label">Previous Button (Page 2)</label>
+                      <input
+                        type="text"
+                        value={formValues.buttonLabels.singleColumn.previous}
+                        onChange={(e) => handleButtonLabelChange('singleColumn', 'previous', e.target.value)}
+                        className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                        placeholder="Enter label (e.g., Previous)"
+                      />
                     </div>
-                    {section.fields.map((field, fieldIndex) => (
-                      <div
-                        key={fieldIndex}
-                        className="ml-4 p-4 bg-zinc-900 rounded-lg border border-gray-600"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <h5 className="text-sm font-semibold text-gray-200">
-                            Field {fieldIndex + 1}
-                          </h5>
-                          {section.fields.length > 1 && (
-                            <button
-                              type="button"
-                              onClick={() => removeField(sectionIndex, fieldIndex)}
-                              className="text-red-400 hover:text-red-300 transition-colors duration-200"
-                            >
-                              <MdRemoveCircle className="w-5 h-5" />
-                            </button>
-                          )}
-                        </div>
-                        <div className="space-y-4">
-                          <div>
-                            <label className="label">Field Name</label>
-                            <input
-                              type="text"
-                              value={field.name}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'name', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter name for Field ${fieldIndex + 1} (e.g., firstName)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              A unique identifier for the field (e.g., firstName, email).
-                            </p>
-                          </div>
-                          <div>
-                            <label className="label">Field Type</label>
-                            <select
-                              value={field.type}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'type', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                            >
-                              <option value="text">Text</option>
-                              <option value="email">Email</option>
-                              <option value="phone">Phone</option>
-                              <option value="select">Select</option>
-                              <option value="checkbox">Checkbox</option>
-                              <option value="textarea">Textarea</option>
-                            </select>
-                            <p className="text-gray-400 text-sm mt-2">
-                              The type of input field (e.g., text, select, checkbox).
-                            </p>
-                          </div>
-                          <div>
-                            <label className="label">Field Label</label>
-                            <input
-                              type="text"
-                              value={field.label}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'label', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter label for Field ${fieldIndex + 1} (e.g., First Name)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              The label displayed for the field.
-                            </p>
-                          </div>
-                          {(field.type === 'select' || field.type === 'checkbox') && (
-                            <div>
-                              <label className="label">Options (Comma-Separated)</label>
-                              <input
-                                type="text"
-                                value={field.options}
-                                onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'options', e.target.value)}
-                                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                                placeholder="Enter options (e.g., Option1,Option2,Option3)"
-                              />
-                              <p className="text-gray-400 text-sm mt-2">
-                                Comma-separated list of options for select or checkbox fields.
-                              </p>
-                            </div>
-                          )}
-                          <div>
-                            <label className="label">Placeholder</label>
-                            <input
-                              type="text"
-                              value={field.placeholder}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'placeholder', e.target.value)}
-                              className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                              placeholder={`Enter placeholder for Field ${fieldIndex + 1} (e.g., Your first name)`}
-                            />
-                            <p className="text-gray-400 text-sm mt-2">
-                              The placeholder text displayed in the field.
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              checked={field.required}
-                              onChange={(e) => handleFieldChange(sectionIndex, fieldIndex, 'required', e.target.checked)}
-                              className="w-5 h-5 rounded border border-gray-600 bg-zinc-800 checked:bg-amber-400 checked:border-amber-400 transition-all"
-                            />
-                            <label className="text-sm text-gray-200">Required</label>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                    <div>
+                      <label className="label">Submit Button (Page 2)</label>
+                      <input
+                        type="text"
+                        value={formValues.buttonLabels.singleColumn.submit}
+                        onChange={(e) => handleButtonLabelChange('singleColumn', 'submit', e.target.value)}
+                        className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                        placeholder="Enter label (e.g., Submit Form)"
+                      />
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-            {/* Media Uploads */}
-            <div>
-              <h3 className="feature-title mb-4">Media Uploads</h3>
-              <div className="space-y-4">
-                {[
-                  { field: 'backgroundImageFile', label: 'Form Background Image', placeholder: 'Click or drag to upload a background image for the form' },
-                  { field: 'thankYouBackgroundImageFile', label: 'Thank You Background Image', placeholder: 'Click or drag to upload a background image for the thank you page' },
-                ].map(({ field, label, placeholder }) => (
-                  <div key={field}>
-                    <label className="label">{label}</label>
-                    <div className="upload-box">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileChange(field, e)}
-                        className="hidden"
-                        id={field}
-                      />
-                      <label
-                        htmlFor={field}
-                        className="w-full h-40 bg-zinc-900 rounded-lg flex items-center justify-center flex-col cursor-pointer border-2 border-dashed border-gray-600 hover:border-yellow-400 transition-all duration-200"
-                      >
-                        <span className="text-yellow-400 text-3xl">+</span>
-                        <p className="text-gray-400 text-sm mt-2">{placeholder}</p>
-                      </label>
-                      {formValues[field] && (
-                        <p className="text-gray-300 text-sm mt-2">
-                          Selected: {formValues[field].name}
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Select one image file for {label.toLowerCase()}. Only image files are allowed.
-                    </p>
+                {/* Two Column Layout (>=1024px) */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-200 mb-3">Two Column Layout (1024px) Devices</h4>
+                  <div>
+                    <label className="label">Submit Button</label>
+                    <input
+                      type="text"
+                      value={formValues.buttonLabels.twoColumn.submit}
+                      onChange={(e) => handleButtonLabelChange('twoColumn', 'submit', e.target.value)}
+                      className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                      placeholder="Enter label (e.g., Submit Form)"
+                    />
                   </div>
-                ))}
+                </div>
+                {/* Thank You Page */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-200 mb-3">Thank You Page</h4>
+                  <div>
+                    <label className="label">Back to Home Button</label>
+                    <input
+                      type="text"
+                      value={formValues.buttonLabels.thankYou.backToHome}
+                      onChange={(e) => handleButtonLabelChange('thankYou', 'backToHome', e.target.value)}
+                      className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
+                      placeholder="Enter label (e.g., Back to Home)"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Submit & Reset Buttons */}
           <ButtonGroup onResetClick={handleReset} />
         </form>
+
+        {/* Submit Confirmation */}
         <AlertDialog open={submitConfirmation} onOpenChange={setSubmitConfirmation}>
           <AlertDialogContent className="dialog-content">
             <AlertDialogHeader>
@@ -546,10 +481,7 @@ const QuestionnaireFormForm = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="dialog-footer">
-              <button
-                className="dialog-button dialog-button-confirm"
-                onClick={confirmSave}
-              >
+              <button className="dialog-button dialog-button-confirm" onClick={confirmSave}>
                 Yes, Submit
               </button>
               <button
@@ -561,6 +493,8 @@ const QuestionnaireFormForm = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Reset Confirmation */}
         <AlertDialog open={resetConfirmation} onOpenChange={setResetConfirmation}>
           <AlertDialogContent className="dialog-content">
             <AlertDialogHeader>
@@ -570,10 +504,7 @@ const QuestionnaireFormForm = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="dialog-footer">
-              <button
-                className="dialog-button dialog-button-confirm"
-                onClick={confirmReset}
-              >
+              <button className="dialog-button dialog-button-confirm" onClick={confirmReset}>
                 Yes, Reset
               </button>
               <button
@@ -590,4 +521,4 @@ const QuestionnaireFormForm = () => {
   );
 };
 
-export default QuestionnaireFormForm;
+export default QuestionnaireFormEdit;
