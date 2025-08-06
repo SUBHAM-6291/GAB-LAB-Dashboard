@@ -327,7 +327,7 @@ const FirstCourseCustomizationForm = () => {
 
           {/* Button Text and URL */}
           <div className="pt-8">
-            <h2 className="heading">
+            <h2 className="feature-title">
               Customize Card Buttons
             </h2>
 
