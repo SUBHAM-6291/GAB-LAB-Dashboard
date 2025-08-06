@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import '@/components/ui/professional-ui.css';
-import ButtonGroup from '@/app/_components/Utilites/Btn'; // Adjust the import path as needed
+import ButtonGroup from '@/app/_components/Utilites/Btn';
 
 const TellUsMoreHereForm = () => {
   const initialFormValues = {
@@ -26,7 +26,7 @@ const TellUsMoreHereForm = () => {
     guestsLabel: '',
     dobLabel: '',
     dateLabel: '',
-    timeSlots: [], // Stored as array
+    timeSlots: [],
     descriptionLabel: '',
     nextButtonLabel: '',
     backButtonLabel: '',
@@ -55,7 +55,7 @@ const TellUsMoreHereForm = () => {
   };
 
   const handleFileChange = (field, e) => {
-    const file = e.target.files[0]; // Only allow one file
+    const file = e.target.files[0];
     if (file) {
       const isVideo = field.includes('VideoFile') && !file.type.startsWith('video/');
       const isImage = field.includes('PosterFile') || field.includes('BackgroundImageFile') && !file.type.startsWith('image/');
@@ -95,7 +95,7 @@ const TellUsMoreHereForm = () => {
     setSubmitConfirmation(false);
     const dataToSubmit = {
       ...formValues,
-      timeSlots: formValues.timeSlots.filter((slot) => slot !== ''), // Filter out empty slots
+      timeSlots: formValues.timeSlots.filter((slot) => slot !== ''),
       page1VideoFile: formValues.page1VideoFile ? formValues.page1VideoFile.name : null,
       page1PosterFile: formValues.page1PosterFile ? formValues.page1PosterFile.name : null,
       page2VideoFile: formValues.page2VideoFile ? formValues.page2VideoFile.name : null,
@@ -145,11 +145,9 @@ const TellUsMoreHereForm = () => {
                     value={formValues.sectionTooltip}
                     onChange={(e) => handleChange('sectionTooltip', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the form section (e.g., Plan Your Event)"
+                    placeholder="Enter tooltip for the form section"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the form section.
-                  </p>
+               
                 </div>
                 <div>
                   <label className="label">Section Heading</label>
@@ -158,11 +156,9 @@ const TellUsMoreHereForm = () => {
                     value={formValues.sectionHeading}
                     onChange={(e) => handleChange('sectionHeading', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the form section (e.g., Tell Us More)"
+                    placeholder="Enter heading for the form section"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The main title for the event planning form.
-                  </p>
+                
                 </div>
                 <div>
                   <label className="label">Section Description</label>
@@ -171,11 +167,9 @@ const TellUsMoreHereForm = () => {
                     onChange={(e) => handleChange('sectionDescription', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
-                    placeholder="Enter description for the form section (e.g., Let’s start planning your private culinary experience.)"
+                    placeholder="Enter description for the form section"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A brief description of the form’s purpose.
-                  </p>
+                
                 </div>
               </div>
             </div>
@@ -184,14 +178,14 @@ const TellUsMoreHereForm = () => {
               <h3 className="feature-title mb-4">Form Field Labels</h3>
               <div className="space-y-4">
                 {[
-                  { field: 'firstNameLabel', label: 'First Name Label', placeholder: 'Enter label for first name (e.g., First Name)' },
-                  { field: 'lastNameLabel', label: 'Last Name Label', placeholder: 'Enter label for last name (e.g., Last Name)' },
-                  { field: 'emailLabel', label: 'Email Address Label', placeholder: 'Enter label for email address (e.g., Email Address)' },
-                  { field: 'phoneLabel', label: 'Phone Number Label', placeholder: 'Enter label for phone number (e.g., Phone Number)' },
-                  { field: 'guestsLabel', label: 'Number of Guests Label', placeholder: 'Enter label for number of guests (e.g., Number of Guests)' },
-                  { field: 'dobLabel', label: 'Date of Birth Label', placeholder: 'Enter label for date of birth (e.g., Date of Birth)' },
-                  { field: 'dateLabel', label: 'Event Date Label', placeholder: 'Enter label for event date (e.g., Event Date)' },
-                  { field: 'descriptionLabel', label: 'Event Description Label', placeholder: 'Enter label for event description (e.g., Tell Us About Your Event)' },
+                  { field: 'firstNameLabel', label: 'First Name Label', placeholder: 'Enter label for first name' },
+                  { field: 'lastNameLabel', label: 'Last Name Label', placeholder: 'Enter label for last name' },
+                  { field: 'emailLabel', label: 'Email Address Label', placeholder: 'Enter label for email address' },
+                  { field: 'phoneLabel', label: 'Phone Number Label', placeholder: 'Enter label for phone number' },
+                  { field: 'guestsLabel', label: 'Number of Guests Label', placeholder: 'Enter label for number of guests' },
+                  { field: 'dobLabel', label: 'Date of Birth Label', placeholder: 'Enter label for date of birth' },
+                  { field: 'dateLabel', label: 'Event Date Label', placeholder: 'Enter label for event date' },
+                  { field: 'descriptionLabel', label: 'Event Description Label', placeholder: 'Enter label for event description' },
                 ].map(({ field, label, placeholder }) => (
                   <div key={field}>
                     <label className="label">{label}</label>
@@ -202,9 +196,7 @@ const TellUsMoreHereForm = () => {
                       className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                       placeholder={placeholder}
                     />
-                    <p className="text-gray-400 text-sm mt-2">
-                      The label displayed for the {label.toLowerCase()} field in the form.
-                    </p>
+                  
                   </div>
                 ))}
                 <div>
@@ -253,7 +245,7 @@ const TellUsMoreHereForm = () => {
                     value={formValues.readMoreText}
                     onChange={(e) => handleChange('readMoreText', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter read more text (e.g., Read More)"
+                    placeholder="Enter read more text"
                   />
                   <p className="text-gray-400 text-sm mt-2">
                     The text for the 'Read More' link in the form (if applicable).
@@ -266,9 +258,9 @@ const TellUsMoreHereForm = () => {
               <h3 className="feature-title mb-4">Button Labels</h3>
               <div className="space-y-4">
                 {[
-                  { field: 'nextButtonLabel', label: 'Next Button Label', placeholder: 'Enter label for Next button (e.g., Next)' },
-                  { field: 'backButtonLabel', label: 'Back Button Label', placeholder: 'Enter label for Back button (e.g., Back)' },
-                  { field: 'submitButtonLabel', label: 'Submit Button Label', placeholder: 'Enter label for Submit button (e.g., Submit)' },
+                  { field: 'nextButtonLabel', label: 'Next Button Label', placeholder: 'Enter label for Next button' },
+                  { field: 'backButtonLabel', label: 'Back Button Label', placeholder: 'Enter label for Back button' },
+                  { field: 'submitButtonLabel', label: 'Submit Button Label', placeholder: 'Enter label for Submit button' },
                 ].map(({ field, label, placeholder }) => (
                   <div key={field}>
                     <label className="label">{label}</label>
@@ -297,11 +289,9 @@ const TellUsMoreHereForm = () => {
                     value={formValues.thankYouTooltip}
                     onChange={(e) => handleChange('thankYouTooltip', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter tooltip for the thank you page (e.g., Thank You!)"
+                    placeholder="Enter tooltip for the thank you page"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A short phrase displayed as a tooltip for the thank you page.
-                  </p>
+                 
                 </div>
                 <div>
                   <label className="label">Thank You Heading</label>
@@ -310,11 +300,9 @@ const TellUsMoreHereForm = () => {
                     value={formValues.thankYouHeading}
                     onChange={(e) => handleChange('thankYouHeading', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter heading for the thank you page (e.g., Submission Successful)"
+                    placeholder="Enter heading for the thank you page"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The main title for the thank you page.
-                  </p>
+                 
                 </div>
                 <div>
                   <label className="label">Thank You Description</label>
@@ -323,11 +311,9 @@ const TellUsMoreHereForm = () => {
                     onChange={(e) => handleChange('thankYouDescription', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
                     rows={4}
-                    placeholder="Enter description for the thank you page (e.g., We’ll contact you soon to craft your culinary journey.)"
+                    placeholder="Enter description for the thank you page"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    A brief message displayed on the thank you page.
-                  </p>
+                  
                 </div>
                 <div>
                   <label className="label">Thank You Back to Home Button Label</label>
@@ -336,11 +322,9 @@ const TellUsMoreHereForm = () => {
                     value={formValues.thankYouBackToHomeLabel}
                     onChange={(e) => handleChange('thankYouBackToHomeLabel', e.target.value)}
                     className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                    placeholder="Enter label for Back to Home button (e.g., Back to Home)"
+                    placeholder="Enter label for Back to Home button"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
-                    The label for the Back to Home button on the thank you page.
-                  </p>
+                 
                 </div>
               </div>
             </div>
@@ -378,9 +362,7 @@ const TellUsMoreHereForm = () => {
                         </p>
                       )}
                     </div>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Select one {type.startsWith('video') ? 'video' : 'image'} file for {label.toLowerCase()}. Only {type.startsWith('video') ? 'video' : 'image'} files are allowed.
-                    </p>
+                    
                   </div>
                 ))}
               </div>
