@@ -96,7 +96,7 @@ const Tailored = () => {
     });
   };
 
-<<<<<<< HEAD:app/_components/Partnership/Tailored/Tailored.jsx
+
  const handleReset = () => {
   setResetConfirmation(true);
 };
@@ -111,11 +111,6 @@ const confirmReset = () => {
   setResetConfirmation(false);
 };
 
-=======
-  const handleReset = () => {
-    setResetConfirmation(true);
-  };
->>>>>>> origin/development:app/_components/Partnership/Collaborate/Collaborate.jsx
 
   return (
     <div className="main-container">
