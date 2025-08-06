@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
-import "@/components/ui/professional-ui.css";
+import '@/components/ui/professional-ui.css';
 import ButtonGroup from '../../Utilites/Btn'; // Adjust the import path as needed
 
 const BannerForm = () => {
@@ -20,7 +20,7 @@ const BannerForm = () => {
     heading: '',
     description: '',
     buttonLabel: '',
-    imageUrl: '',
+    imageFile: null, // Store the selected file
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -34,11 +34,31 @@ const BannerForm = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Only allow one file
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file.', {
+          duration: 1000,
+          className: 'toast-error',
+        });
+        return;
+      }
+      setFormValues((prev) => ({
+        ...prev,
+        imageFile: file,
+      }));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allEmpty = Object.values(formValues).every((value) => value.trim() === '');
+    const allEmpty =
+      Object.values(formValues).every(
+        (value) => value === '' || value === null
+      );
     if (allEmpty) {
-      toast.error('Please fill at least one field before submitting.', {
+      toast.error('Please fill at least one field or select an image before submitting.', {
         duration: 1000,
         className: 'toast-error',
       });
@@ -49,7 +69,11 @@ const BannerForm = () => {
 
   const confirmSave = async () => {
     setSubmitConfirmation(false);
-    console.log('Updated Banner Section Data:', formValues);
+    const dataToSubmit = {
+      ...formValues,
+      imageFile: formValues.imageFile ? formValues.imageFile.name : null,
+    };
+    console.log('Updated Banner Section Data:', dataToSubmit);
     toast.success('Banner content has been saved successfully!', {
       duration: 2000,
       className: 'toast-success',
@@ -125,23 +149,40 @@ const BannerForm = () => {
                 placeholder="Enter label for Partner With Us button"
               />
             </div>
-            {/* Image URL */}
+            {/* Image File Selection */}
             <div>
-              <label className="label">Image URL</label>
-              <input
-                type="url"
-                value={formValues.imageUrl}
-                onChange={(e) => handleChange('imageUrl', e.target.value)}
-                className="w-full bg-zinc-800 rounded-lg p-3 text-white transition-all duration-200"
-                placeholder="Enter URL for Banner image"
-              />
+              <label className="label">Banner Image (Select from Google Drive)</label>
+              <div className="upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  id="imageUpload"
+                />
+                <label
+                  htmlFor="imageUpload"
+                  className="w-full h-40 bg-zinc-800 rounded-lg flex items-center justify-center flex-col cursor-pointer border-2 border-dashed border-gray-600 hover:border-yellow-400 transition-all duration-200"
+                >
+                  <span className="text-yellow-400 text-3xl">+</span>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Click or drag to upload an image from Google Drive
+                  </p>
+                </label>
+                {formValues.imageFile && (
+                  <p className="text-gray-300 text-sm mt-2">
+                    Selected: {formValues.imageFile.name}
+                  </p>
+                )}
+              </div>
+              <p className="text-gray-400 text-sm mt-2">
+                Select one image file from Google Drive. Only image files are allowed.
+              </p>
             </div>
           </div>
-
           {/* Submit & Reset Buttons */}
           <ButtonGroup onResetClick={handleReset} />
         </form>
-
         {/* Submit Confirmation */}
         <AlertDialog open={submitConfirmation} onOpenChange={setSubmitConfirmation}>
           <AlertDialogContent className="dialog-content">
@@ -167,7 +208,6 @@ const BannerForm = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
         {/* Reset Confirmation */}
         <AlertDialog open={resetConfirmation} onOpenChange={setResetConfirmation}>
           <AlertDialogContent className="dialog-content">

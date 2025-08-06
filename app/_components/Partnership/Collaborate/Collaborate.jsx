@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
-import "@/components/ui/professional-ui.css";
+import '@/components/ui/professional-ui.css';
 import ButtonGroup from '../../Utilites/Btn';
 
 const Tailored = () => {
@@ -96,6 +96,7 @@ const Tailored = () => {
     });
   };
 
+<<<<<<< HEAD:app/_components/Partnership/Tailored/Tailored.jsx
  const handleReset = () => {
   setResetConfirmation(true);
 };
@@ -110,6 +111,11 @@ const confirmReset = () => {
   setResetConfirmation(false);
 };
 
+=======
+  const handleReset = () => {
+    setResetConfirmation(true);
+  };
+>>>>>>> origin/development:app/_components/Partnership/Collaborate/Collaborate.jsx
 
   return (
     <div className="main-container">
@@ -292,9 +298,7 @@ const confirmReset = () => {
           </div>
 
           {/* Submit & Reset Buttons */}
-
           <ButtonGroup onResetClick={handleReset} />
-
         </form>
 
         {/* Submit Confirmation */}

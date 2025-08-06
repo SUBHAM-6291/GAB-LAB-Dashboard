@@ -1,13 +1,12 @@
-import React from 'react'
-import Course from '@/app/_components/home/contactUs/contactUs'
+import React from "react";
+import Course from "@/app/_components/home/course/Course";
 
 const page = () => {
   return (
     <div>
-        <Course/>
-      
+      <Course />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

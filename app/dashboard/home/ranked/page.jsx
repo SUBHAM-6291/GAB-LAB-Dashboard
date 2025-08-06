@@ -1,10 +1,10 @@
 import React from 'react'
-import ranked from '@/app/_components/home/ranked/ranked'
+import RankedForm from '@/app/_components/home/ranked/ranked'
 
 const page = () => {
   return (
     <div>
-    <ranked/>
+ <RankedForm/>
     </div>
   )
 }

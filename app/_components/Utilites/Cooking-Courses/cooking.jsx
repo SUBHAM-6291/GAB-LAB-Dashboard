@@ -1,6 +1,6 @@
 import React from 'react'
 
-const contactUs = () => {
+const cooking = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const contactUs = () => {
   )
 }
 
-export default contactUs
+export default cooking

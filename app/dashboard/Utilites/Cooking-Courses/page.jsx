@@ -1,10 +1,10 @@
 import React from 'react'
-import LeaveUsReview from '@/app/_components/home/leaveUsReview/leaveUsReview'
+import cooking from '@/app/_components/Utilites/Cooking-Courses/cooking'
 
 const page = () => {
   return (
     <div>
-      <LeaveUsReview/>
+      <cooking/>
     </div>
   )
 }

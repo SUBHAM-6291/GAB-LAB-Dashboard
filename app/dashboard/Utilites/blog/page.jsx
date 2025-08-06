@@ -1,10 +1,10 @@
 import React from 'react'
-import LeaveUsReview from '@/app/_components/home/leaveUsReview/leaveUsReview'
+import Blog from '@/app/_components/Utilites/blog/blog'
 
 const page = () => {
   return (
     <div>
-      <LeaveUsReview/>
+      <Blog/>
     </div>
   )
 }
