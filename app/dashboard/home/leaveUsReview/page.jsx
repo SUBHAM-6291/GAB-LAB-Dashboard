@@ -1,10 +1,10 @@
 import React from 'react'
-import leaveUsReview from '@/app/_components/home/leaveUsReview/leaveUsReview'
+import LeaveUsReview from '@/app/_components/home/leaveUsReview/leaveUsReview'
 
 const page = () => {
   return (
     <div>
-      <leaveUsReview/>
+      <LeaveUsReview/>
     </div>
   )
 }

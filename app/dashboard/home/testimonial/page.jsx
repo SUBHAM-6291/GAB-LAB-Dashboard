@@ -1,10 +1,10 @@
 import React from 'react'
-import testimonial from '@/app/_components/home/testimonial/testimonial'
+import Testimonial from '@/app/_components/home/Testimonial/Testimonial'
 
 const page = () => {
   return (
     <div>
-        <testimonial/>
+        <Testimonial/>
       
     </div>
   )

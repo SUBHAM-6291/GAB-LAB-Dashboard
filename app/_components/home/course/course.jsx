@@ -1,11 +1,12 @@
 import React from 'react'
 
-const course = () => {
+const Course = () => {
   return (
     <div>
+      <h1 className='text-[100px] text-red-700'>this is course section gggggggggggggggggggggggggggggggggggggggggggggggggggggg</h1>
       
     </div>
   )
 }
 
-export default course
+export default Course
