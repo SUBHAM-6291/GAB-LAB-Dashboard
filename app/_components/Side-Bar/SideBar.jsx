@@ -101,16 +101,7 @@ const menuItems = [
       path: "/dashboard/home/contactUs",
       icon: <MdContactMail className="w-4 h-4" />,
     },
-    {
-      title: "OurGuests",
-      path: "/dashboard/home/ourGuests",
-      icon: <MdPeople className="w-4 h-4" />,
-    },
-    {
-      title: "SummerSale",
-      path: "/dashboard/home/summerSale",
-      icon: <MdLocalOffer className="w-4 h-4" />,
-    },
+ 
   ],
 }
 ,  {
