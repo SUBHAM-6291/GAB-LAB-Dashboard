@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { MdEdit, MdAddCircle, MdRemoveCircle } from 'react-icons/md';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
+
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -15,11 +18,11 @@ import { toast } from 'sonner';
 import '@/components/ui/professional-ui.css';
 import ButtonGroup from '@/app/_components/Utilites/Btn';
 
-const CardsForm = () => {
+const DiscoverOurFeuture = () => {
   const initialFormValues = {
     tooltip: '',
     heading: '',
-   
+    subheading: '',
     description: '',
   };
 
@@ -141,7 +144,7 @@ const CardsForm = () => {
     <div className="main-container">
       <div className="flex items-center gap-3 mb-8">
         <MdEdit className="text-yellow-400 w-6 h-6" />
-        <h2 className="heading">Edit Our Team Section</h2>
+        <h2 className="heading">Edit Explore Section</h2>
       </div>
 
       <form
@@ -169,7 +172,16 @@ const CardsForm = () => {
               placeholder="Enter heading"
             />
           </div>
-         
+          <div>
+            <label className="label"> Sub Heading</label>
+            <input
+              type="text"
+              value={formValues.subheading}
+              onChange={(e) => handleChange('subheading', e.target.value)}
+              className="w-full bg-zinc-800 rounded-lg p-3 text-white"
+              placeholder="Enter heading"
+            />
+          </div>
           <div>
             <label className="label">Description</label>
             <textarea
@@ -215,7 +227,7 @@ const CardsForm = () => {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="label">Name</label>
+                    <label className="label">Title</label>
                     <input
                       type="text"
                       value={card.title}
@@ -225,7 +237,7 @@ const CardsForm = () => {
                     />
                   </div>
                   <div>
-                    <label className="label">Bio</label>
+                    <label className="label">Short Description</label>
                     <textarea
                       value={card.shortDescription}
                       onChange={(e) =>
@@ -236,11 +248,8 @@ const CardsForm = () => {
                       placeholder={`Enter short description for Card ${index + 1}`}
                     />
                   </div>
-                
-
-{/* // Inside your component JSX: */}
-<div className="mb-6">
-  <label className="block text-sm font-medium text-yellow-400 mb-2"> Image</label>
+                  <div className="mb-6">
+  <label className="block text-sm font-medium text-yellow-400 mb-2">Logo</label>
 
   <div className="relative group border-2 border-dashed border-zinc-700 rounded-lg p-6 bg-zinc-800 hover:border-yellow-500 transition-all duration-300">
     <input
@@ -257,16 +266,16 @@ const CardsForm = () => {
   </div>
 
   {card.imageFile && (
-    <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="mt-4">
       <img
         src={URL.createObjectURL(card.imageFile)}
         alt={`Card ${index + 1}`}
-        className="w-full sm:w-40 h-24 object-cover rounded shadow-lg border border-zinc-700"
+        className="w-full h-48 object-cover rounded shadow-lg border border-zinc-700"
       />
       <button
         type="button"
         onClick={() => handleRemoveCardImage(index)}
-        className="text-sm px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition duration-300"
+        className="mt-2 text-sm px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition duration-300"
       >
         Remove Image
       </button>
@@ -274,6 +283,7 @@ const CardsForm = () => {
   )}
 </div>
 
+                   
                 </div>
               </div>
             ))}
@@ -332,4 +342,4 @@ const CardsForm = () => {
   );
 };
 
-export default CardsForm;
+export default DiscoverOurFeuture;
