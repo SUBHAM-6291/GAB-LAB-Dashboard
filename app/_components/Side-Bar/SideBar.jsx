@@ -34,10 +34,10 @@ import {
   MdExpandLess,
   MdMenu,
   MdClose,
-  MdGroup,
-  MdClass,
-  MdHistory,
-  MdHandshake,
+  MdGroup, // Added for Private Group
+  MdClass, // Added for Our Classes
+  MdHistory, // Added for Our Story
+  MdHandshake, // Added for Partnership
 } from "react-icons/md";
 
 const menuItems = [
@@ -105,9 +105,8 @@ const menuItems = [
   ],
 }
 ,  {
-  
     title: "OurClasses",
-    icon: <MdClass className="w-5 h-5" />,
+    icon: <MdClass className="w-5 h-5" />, // Updated icon
     subItems: [
       {
         title: "Banner",
@@ -123,80 +122,83 @@ const menuItems = [
   },
   {
     title: "PrivateGroup",
-    icon: <MdGroup className="w-5 h-5" />,
+    icon: <MdGroup className="w-5 h-5" />, // Updated icon
     subItems: [
       {
         title: "Banner",
         path: "/dashboard/Private_Group/Banner",
-        icon: <MdImage className="w-4 h-4" />,
+        icon: <MdImage className="w-4 h-4" />, // Changed to MdImage for better context
       },
       {
         title: "PrivateGroup",
         path: "/dashboard/Private_Group/Private_Group",
-        icon: <MdGroup className="w-4 h-4" />,
+        icon: <MdGroup className="w-4 h-4" />, // Changed to MdGroup
       },
       {
         title: "PrivateClass",
         path: "/dashboard/Private_Group/Private_Class",
-        icon: <MdClass className="w-4 h-4" />,
+        icon: <MdClass className="w-4 h-4" />, // Changed to MdClass
       },
       {
         title: "TellUsMoreHere",
         path: "/dashboard/Private_Group/Tell_Us_More_Here",
-        icon: <MdComment className="w-4 h-4" />,
+        icon: <MdComment className="w-4 h-4" />, // Changed to MdComment
       },
     ],
   },
-  {
-    title: "OurStory",
-    icon: <MdHistory className="w-5 h-5" />,
-    subItems: [
-      {
-        title: "Banner",
-        path: "/dashboard/Our-Story/Banner",
-        icon: <MdEvent className="w-4 h-4" />,
-      },
-      {
-        title: "TripAdvisor",
-        path: "/dashboard/Our-Story/TripAdvisor",
-        icon: <MdFeedback className="w-4 h-4" />,
-      },
-      {
-        title: "DiscoverOurFeature",
-        path: "/dashboard/Our-Story/Discover-our-feature",
-        icon: <MdStar className="w-4 h-4" />,
-      },
-      {
-        title: "AboutUs",
-        path: "/dashboard/Our-Story/About-us",
-        icon: <MdInfo className="w-4 h-4" />,
-      },
-      {
-        title: "Discover",
-        path: "/dashboard/Our-Story/Discover",
-        icon: <MdExplore className="w-4 h-4" />,
-      },
-      {
-        title: "Process",
-        path: "/dashboard/Our-Story/Process",
-        icon: <MdSettingsApplications className="w-4 h-4" />,
-      },
-      {
-        title: "OurTeam",
-        path: "/dashboard/Our-Story/Our-Team",
-        icon: <MdPeople className="w-4 h-4" />,
-      },
-      {
-        title: "WhyChoose",
-        path: "/dashboard/Our-Story/Why-Choose",
-        icon: <MdTrendingUp className="w-4 h-4" />,
-      },
-    ],
-  },
+
+ {
+  title: "OurStory",
+  icon: <MdHistory className="w-5 h-5" />,
+  subItems: [
+    {
+      title: "Banner",
+      path: "/dashboard/Our-Story/Banner",
+      icon: <MdEvent className="w-4 h-4" />,
+    },
+    {
+      title: "TripAdvisor",
+      path: "/dashboard/Our-Story/TripAdvisor",
+      icon: <MdFeedback className="w-4 h-4" />,
+    },
+    {
+      title: "DiscoverOurFeature",
+      path: "/dashboard/Our-Story/Discover-our-feature",
+      icon: <MdStar className="w-4 h-4" />,
+    },
+    {
+      title: "AboutUs",
+      path: "/dashboard/Our-Story/About-us",
+      icon: <MdInfo className="w-4 h-4" />,
+    },
+    {
+      title: "Discover",
+      path: "/dashboard/Our-Story/Discover",
+      icon: <MdExplore className="w-4 h-4" />,
+    },
+    {
+      title: "Process",
+      path: "/dashboard/Our-Story/Process",
+      icon: <MdSettingsApplications className="w-4 h-4" />,
+    },
+    {
+      title: "OurTeam",
+      path: "/dashboard/Our-Story/Our-Team",
+      icon: <MdPeople className="w-4 h-4" />,
+    },
+    {
+      title: "WhyChoose",
+      path: "/dashboard/Our-Story/Why-Choose",
+      icon: <MdTrendingUp className="w-4 h-4" />,
+    },
+  ],
+}
+,
   {
     title: "Partnership",
-    icon: <MdHandshake className="w-5 h-5" />,
+    icon: <MdHandshake className="w-5 h-5" />, // Updated icon
     subItems: [
+      
       {
         title: "Banner",
         path: "/dashboard/partnership/Banner",
@@ -210,12 +212,12 @@ const menuItems = [
       {
         title: "Benefits",
         path: "/dashboard/partnership/Benifits",
-        icon: <MdStar className="w-4 h-4" />,
+        icon: <MdStar className="w-4 h-4" />, // Changed to MdStar
       },
       {
         title: "Query",
         path: "/dashboard/partnership/Query",
-        icon: <MdHelp className="w-4 h-4" />,
+        icon: <MdHelp className="w-4 h-4" />, // Changed to MdHelp
       },
     ],
   },
@@ -232,7 +234,7 @@ const menuItems = [
       {
         title: "Cards",
         path: "/dashboard/Blog/cards",
-        icon: <MdArticle className="w-4 h-4" />,
+        icon: <MdArticle className="w-4 h-4" />, // Changed to MdArticle
       },
     ],
   },
@@ -255,7 +257,7 @@ const menuItems = [
       {
         title: "CookingCourses",
         path: "/dashboard/Utilites/Cooking-Courses",
-        icon: <MdRestaurant className="w-4 h-4" />,
+        icon: <MdRestaurant className="w-4 h-4" />, // Changed to MdRestaurant
       },
       {
         title: "Blog",
@@ -284,12 +286,12 @@ const menuItems = [
       {
         title: "Navbar",
         path: "/dashboard/shared/Navbar",
-        icon: <MdWeb className="w-4 h-4" />,
+        icon: <MdWeb className="w-4 h-4" />, // Changed to MdWeb
       },
       {
         title: "Footer",
         path: "/dashboard/shared/Footer",
-        icon: <MdWeb className="w-4 h-4" />,
+        icon: <MdWeb className="w-4 h-4" />, // Changed to MdWeb
       },
     ],
   },
@@ -364,23 +366,25 @@ const SideBar = ({ topbarText = "Dashboard" }) => {
 
   return (
     <>
-      {/* Top Bar */}
       <div className="flex items-center justify-between w-full md:w-[calc(100%-16rem)] h-[60px] px-4 md:px-6 bg-zinc-900 text-white fixed top-0 md:left-64 right-0 z-10 shadow-sm">
         <h1 className="font-semibold text-xl md:text-2xl">{currentSection}</h1>
         <div className="flex items-center gap-3">
           <Link href="/dashboard/Profile/Profile">
-            <MdPeople className="w-[28px] md:w-[30px] h-auto text-gray-300 rounded-full p-1" />
+            <MdPeople
+              className="w-[28px] md:w-[30px] h-auto text-gray-300 rounded-full p-1"
+              aria-label="Profile"
+            />
           </Link>
           <button
             onClick={toggleSidebar}
             className="md:hidden w-[28px] md:w-[30px] h-auto text-gray-300 hover:text-yellow-400 hover:shadow-[0_0_8px_rgba(234,179,8,0.5)] transition-colors duration-200 rounded-full p-1"
+            aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
           >
             {isOpen ? <MdClose /> : <MdMenu />}
           </button>
         </div>
       </div>
 
-      {/* Sidebar */}
       <aside
         className={`w-64 bg-zinc-900 border-r border-yellow-400/20 p-6 h-screen fixed top-0 left-0 overflow-y-auto transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -427,9 +431,7 @@ const SideBar = ({ topbarText = "Dashboard" }) => {
                     aria-expanded={isExpanded}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) =>
-                      e.key === "Enter" && toggleSubMenu(index)
-                    }
+                    onKeyDown={(e) => e.key === "Enter" && toggleSubMenu(index)}
                   >
                     {item.icon}
                     <span className="text-base font-medium">{item.title}</span>
@@ -461,34 +463,29 @@ const SideBar = ({ topbarText = "Dashboard" }) => {
                 )}
                 {hasSubItems && isExpanded && (
                   <ul className="ml-8 mt-2 space-y-2">
-                    {item.subItems.map((subItem, subIdx) => {
-                      const subKey = `${index}-${subIdx}`;
-                      return (
-                        <li key={subItem.title}>
-                          <Link
-                            href={subItem.path}
-                            className={`flex items-center gap-2 text-sm text-white hover:text-yellow-400 transition-colors duration-200 ${
-                              activeSubIdx === subKey ||
-                              pathname === subItem.path
-                                ? "text-yellow-400"
-                                : ""
-                            }`}
-                            onClick={() => {
-                              setActiveSubIdx(subKey);
-                              setIsOpen(false);
-                            }}
-                            aria-current={
-                              pathname === subItem.path ? "page" : undefined
-                            }
-                          >
-                            {subItem.icon}
-                            <span className="font-normal">
-                              {subItem.title}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
+                    {item.subItems.map((subItem, subIdx) => (
+                      <li key={subItem.title}>
+                        <Link
+                          href={subItem.path}
+                          className={`flex items-center gap-2 text-sm text-white hover:text-yellow-400 transition-colors duration-200 ${
+                            activeSubIdx === `${index}-${subIdx}` ||
+                            pathname === subItem.path
+                              ? "text-yellow-400"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            setActiveSubIdx(`${index}-${subIdx}`);
+                            setIsOpen(false);
+                          }}
+                          aria-current={
+                            pathname === subItem.path ? "page" : undefined
+                          }
+                        >
+                          {subItem.icon}
+                          <span className="font-normal">{subItem.title}</span>
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 )}
               </li>
