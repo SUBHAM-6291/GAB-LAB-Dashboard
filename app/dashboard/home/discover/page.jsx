@@ -1,4 +1,5 @@
-import Discover from '@/app/_components/Our-Story/Discover/Discover'
+
+import Discover from '@/app/_components/home/Discover/Discover'
 import React from 'react'
 
 const page = () => {

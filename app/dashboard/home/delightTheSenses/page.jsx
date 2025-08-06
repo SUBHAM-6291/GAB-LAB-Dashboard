@@ -1,10 +1,10 @@
 import React from 'react'
-import delightTheSenses from '@/app/_components/home/delightTheSenses/delightTheSenses'
+import DelightTheSenses from '@/app/_components/home/DelightTheSenses/DelightTheSenses'
 
 const page = () => {
   return (
     <div>
-     <delightTheSenses/>
+     <DelightTheSenses/>
     </div>
   )
 }
