@@ -47,63 +47,65 @@ const menuItems = [
     icon: <MdDashboard className="w-5 h-5" />,
     subItems: [],
   },
-  {
-    title: "Home",
-    icon: <MdHome className="w-5 h-5" />,
-    subItems: [
-      {
-        title: "HeroSection",
-        path: "/dashboard/home/heroSection",
-        icon: <MdWeb className="w-4 h-4" />,
-      },
-      {
-        title: "Ranked",
-        path: "/dashboard/home/ranked",
-        icon: <MdEmojiEvents className="w-4 h-4" />,
-      },
-      {
-        title: "LiveFlamencoShows",
-        path: "/dashboard/home/liveFlamencoShows",
-        icon: <MdEvent className="w-4 h-4" />,
-      },
-      {
-        title: "PaellaCookingClass",
-        path: "/dashboard/home/paellaCookingClass",
-        icon: <MdRestaurant className="w-4 h-4" />,
-      },
-      {
-        title: "Course",
-        path: "/dashboard/home/course",
-        icon: <MdSchool className="w-4 h-4" />,
-      },
-      {
-        title: "Discover",
-        path: "/dashboard/home/discover",
-        icon: <MdExplore className="w-4 h-4" />,
-      },
-      {
-        title: "LeaveUsReview",
-        path: "/dashboard/home/leaveUsReview",
-        icon: <MdComment className="w-4 h-4" />,
-      },
-      {
-        title: "Testimonial",
-        path: "/dashboard/home/testimonial",
-        icon: <MdFeedback className="w-4 h-4" />,
-      },
-      {
-        title: "DelightTheSenses",
-        path: "/dashboard/home/delightTheSenses",
-        icon: <MdStar className="w-4 h-4" />,
-      },
-      {
-        title: "ContactUs",
-        path: "/dashboard/home/contactUs",
-        icon: <MdContactMail className="w-4 h-4" />,
-      },
-    ],
-  },
-  {
+{
+  title: "Home",
+  icon: <MdHome className="w-5 h-5" />,
+  subItems: [
+    {
+      title: "HeroSection",
+      path: "/dashboard/home/heroSection",
+      icon: <MdWeb className="w-4 h-4" />,
+    },
+    {
+      title: "Ranked",
+      path: "/dashboard/home/ranked",
+      icon: <MdEmojiEvents className="w-4 h-4" />,
+    },
+    {
+      title: "LiveFlamencoShows",
+      path: "/dashboard/home/liveFlamencoShows",
+      icon: <MdEvent className="w-4 h-4" />,
+    },
+    {
+      title: "PaellaCookingClass",
+      path: "/dashboard/home/paellaCookingClass",
+      icon: <MdRestaurant className="w-4 h-4" />,
+    },
+    {
+      title: "Course",
+      path: "/dashboard/home/course",
+      icon: <MdSchool className="w-4 h-4" />,
+    },
+    {
+      title: "Discover",
+      path: "/dashboard/home/discover",
+      icon: <MdExplore className="w-4 h-4" />,
+    },
+    {
+      title: "LeaveUsReview",
+      path: "/dashboard/home/leaveUsReview",
+      icon: <MdComment className="w-4 h-4" />,
+    },
+    {
+      title: "Testimonial",
+      path: "/dashboard/home/testimonial",
+      icon: <MdFeedback className="w-4 h-4" />,
+    },
+    {
+      title: "DelightTheSenses",
+      path: "/dashboard/home/delightTheSenses",
+      icon: <MdStar className="w-4 h-4" />,
+    },
+    {
+      title: "ContactUs",
+      path: "/dashboard/home/contactUs",
+      icon: <MdContactMail className="w-4 h-4" />,
+    },
+ 
+  ],
+}
+,  {
+  
     title: "OurClasses",
     icon: <MdClass className="w-5 h-5" />,
     subItems: [
