@@ -1,12 +1,13 @@
 
-import Discover from '@/app/_components/home/Discover/Discover'
+
+import Discover from '@/app/_components/home/discover/discover'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Discover/>
       
+      <Discover/>
     </div>
   )
 }

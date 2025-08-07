@@ -1,10 +1,11 @@
+import DelightTheSensesForm from '@/app/_components/home/delightTheSenses/delightTheSenses'
 import React from 'react'
-import DelightTheSenses from '@/app/_components/home/DelightTheSenses/DelightTheSenses'
+
 
 const page = () => {
   return (
     <div>
-     <DelightTheSenses/>
+   <DelightTheSensesForm/>
     </div>
   )
 }
