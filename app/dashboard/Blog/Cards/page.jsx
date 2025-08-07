@@ -1,10 +1,11 @@
-import Cards from '@/app/_components/Blog/card/Cards'
+
+import CardsForm from '@/app/_components/Blog/card/Cards'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <Cards/>
+   <CardsForm/>
     </div>
   )
 }
